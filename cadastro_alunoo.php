@@ -123,7 +123,8 @@
     
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <div class="input-group">
-                <label for="nome">Nomeerew</label>
+                <label for="nome">Nome:   </label>
+
                 <input type="text" name="nome" required><br>
             </div>
             <div class="input-group">
