@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblio.Tech</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #20C475, white);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+           
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 10px;
+            background-color: #20C475;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover{
+          background-color: #15a35e;
+          transition: 0.5s;
+        }
+
+        .square {
+
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: calc(100% + 20px);
+            height: calc(100% + 20px);
+            background-color: #e0e0e0;
+            z-index: -1;
+            border-radius: 10px;
+            box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+        }
+        h1{
+          font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="square"></div>
+        <h1>O que você é?</h1>
+        <a href="cadastro_professor.html"><button class="button">Professor</button></a>
+        <a href="cadastro_aluno.php"><button class="button">Aluno</button></a>
+    </div>
+
+
+</body>
+</html>

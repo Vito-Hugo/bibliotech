@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração da Biblioteca</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #20C475;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .sidebar {
+            background-color: #f2f2f2;
+            width: 200px;
+            height: 100vh;
+            padding: 20px;
+            float: left;
+            box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 20px;
+        }
+        .sidebar ul li a:hover {
+            color: #20C475;
+        }
+        .sidebar ul img{
+            margin-bottom: 20px;
+        }  
+
+        .container {
+            margin: 20px;
+            overflow: hidden;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            margin-left: 20px;
+            align-items: center;
+            background-color: #e6e5e5;
+            padding: 20px 40px 20px 30px;
+            border-radius: 10px;
+            box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        form label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        form input[type="text"],
+        form input[type="date"] {
+            width: 45%;
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        form .input-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        form button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #20C475;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            display: block;
+            margin-top: 20px;
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .box {
+            width: 200px;
+            padding: 20px;
+            background: linear-gradient(to bottom, #20C475, white);
+            margin-right: 55px;
+            margin-left: 70px;
+            border-radius: 10px; 
+            box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        p {
+            font-size: 50px;
+            margin: 0;
+        }
+    </style>
+</<body>
+    <header>
+        <h1>Administração da Biblioteca</h1>
+    </header>
+    <div class="sidebar">
+        <ul>
+            <img src="./img/logo.png" alt="" width="200" height="50">
+            <li><a href="#">Emprestimo</a></li>
+            <li><a href="#">Alunos</a></li>
+            <li><a href="#">Clube do Livro</a></li>
+            <li><a href="#">Projeto de Leitura</a></li>
+            <li><a href="#">Professores</a></li>
+            <li><a href="cadastro_livro.html">Cadastro de Livros</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="box-container">
+            <div class="box">
+                <h2>Livros</h2>
+                <p>6000</p>
+            </div>
+            <div class="box">
+                <h2>Emprestados</h2>
+                <p>20</p>
+            </div>
+            <div class="box">
+                <h2>Atrasados</h2>
+                <p>5</p>
+            </div>
+        </div>
+        <div class="form-container">
+            <form>
+                <h2>Empréstimo</h2>
+                <div class="input-group">
+                    <div>
+                        <label for="codigo">Código do Livro:</label>
+                        <input type="text" id="codigo" name="codigo" required>
+                    </div>
+                    <div>
+                        <label for="aluno">Nome do Aluno:</label>
+                        <input type="text" id="aluno" name="aluno" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div>
+                        <label for="retirada">Data de Retirada:</label>
+                        <input type="date" id="retirada" name="retirada" required>
+                    </div>
+                    <div>
+                        <label for="entrega">Data de Entrega:</label>
+                        <input type="date" id="entrega" name="entrega" required>
+                    </div>
+                </div>
+                <button type="submit">Realizar Empréstimo</button>
+            </form>
+
+            <form>
+                <h2>Renovação de Empréstimo</h2>
+                <div class="input-group">
+                    <div>
+                        <label for="codigo-renovar">Código do Livro:</label>
+                        <input type="text" id="codigo-renovar" name="codigo-renovar" required>
+                    </div>
+                    <div>
+                        <label for="aluno-renovar">Nome do Aluno:</label>
+                        <input type="text" id="aluno-renovar" name="aluno-renovar" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div>
+                        <label for="retirada-renovar">Nova Data de Retirada:</label>
+                        <input type="date" id="retirada-renovar" name="retirada-renovar" required>
+                    </div>
+                    <div>
+                        <label for="entrega-renovar">Nova Data de Entrega:</label>
+                        <input type="date" id="entrega-renovar" name="entrega-renovar" required>
+                    </div>
+                </div>
+               <button type="submit">Renovar Empréstimo</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
