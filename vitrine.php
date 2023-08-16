@@ -145,7 +145,7 @@ session_start();
         <div class="swiper-wrapper">
             <?php
             // Conexão com o banco de dados
-            $conexao = mysqli_connect('localhost', 'root', 'root', 'biblioteca');
+            $conexao = mysqli_connect('localhost', 'root', 'root', 'bibliotech');
 
             // Verifica a conexão
             if (mysqli_connect_errno()) {
@@ -159,10 +159,10 @@ session_start();
             // Loop para exibir os registros
             while ($row = mysqli_fetch_assoc($result)) {
                 $id = $row['id'];
-                $nome = $row['Nome'];
-                $autor = $row['Autor'];
-                $imagem = $row['Imagem'];
-                $quantidade = $row['Quantidade'];
+                $nome = $row['nome'];
+                $autor = $row['autor'];
+                $imagem = $row['imagens'];
+                $unidade = $row['unidade'];
             ?>
                 <div class="swiper-slide box">
                     <div class="icons">
@@ -206,7 +206,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "root";
-$dbname = "biblioteca";
+$dbname = "bibliotech";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -229,10 +229,10 @@ $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 // Loop através dos resultados e exiba as informações dos livros
                 while ($row = $result->fetch_assoc()) {
-                    $nome = $row["Nome"];
-                    $autor = $row["Autor"];
-                    $imagem = $row["Imagem"];
-                    $quantidade = $row["Quantidade"];
+                    $nome = $row["nome"];
+                    $autor = $row["autor"];
+                    $imagem = $row["imagens"];
+                    $unidade = $row["unidade"];
             ?>
                     <a href="#" class="swiper-slide box">
                         <div class="image">
@@ -257,7 +257,7 @@ $result = $conn->query($sql);
                 echo "Nenhum livro encontrado.";
             }
             // Feche a conexão com o banco de dados
-            $conn->close();
+            $conn->close(); 
             ?>
         </div>
 
