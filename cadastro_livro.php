@@ -123,6 +123,7 @@
     <header>
         <h1>Administração da Biblioteca</h1>
     </header>
+   
     <div class="sidebar">
         <ul>
             <img src="./img/logo.png" alt="" width="200" height="50">
@@ -136,7 +137,8 @@
         </ul>
     </div>
     <div class="container">
-        <form method="POST" action="">
+
+    <form method="POST" action="" enctype="multipart/form-data">
             <h2>Cadastro de livros</h2>
             <div class="input-group">
                 <label for="nome">Nome do Livro:</label>
@@ -176,8 +178,12 @@
             </div>
             <div class="input-group">
                 <label for="codigo">Codigo do livro:</label>
-                <input type="number" id="codigo" name="codigo" required>
+                <input type="number" id="codigo" name="codigo" required> 
             </div>
+            <div class="input-group">
+            <label for="imagens">imagens do Livro:</label>
+            <input type="file" id="imagens" name="imagens">
+        </div>
             
             <button type="submit">Cadastrar</button>
         </form>
@@ -207,15 +213,40 @@
         $posicao = $_POST["posicao"];
         $sinopse = $_POST["sinopse"];
 
-        $sql = "INSERT INTO livros (codigo, nome, autor, classificacao, paginas, ano, editora, idioma, posicao, sinopse)
-                VALUES ('$codigo', '$nome', '$autor', '$classificacao', $paginas, $ano, '$editora', '$idioma', '$posicao', '$sinopse')";
+        $targetDir = "uploads/"; // Diretório de destino para as imagens
+        $targetFile = $targetDir . basename($_FILES["imagens"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
+        if (!empty($_FILES["imagens"]["tmp_name"])) {
+            $check = getimagesize($_FILES["imagens"]["tmp_name"]);
+            if ($check !== false) {
+                $uploadOk = 1;
+            } else {
+                echo "<p>O arquivo enviado não é uma imagens.</p>";
+                $uploadOk = 0;
+            }
+        }
+    
+        // Move a imagens para o diretório de destino
+        if ($uploadOk == 1) {
+            if (move_uploaded_file($_FILES["imagens"]["tmp_name"], $targetFile)) {
+                echo "<p>A imagens foi enviada com sucesso.</p>";
+            } else {
+                echo "<p>Ocorreu um erro ao enviar a imagens.</p>";
+            }
+        }
+    
+        $sql = "INSERT INTO livros (codigo, nome, autor, classificacao, paginas, ano, editora, idioma, posicao, sinopse, imagens)
+        VALUES ('$codigo', '$nome', '$autor', '$classificacao', $paginas, $ano, '$editora', '$idioma', '$posicao', '$sinopse', '$targetFile')";
+
+    
         if ($conn->query($sql) === TRUE) {
             echo "<p>Cadastro do livro realizado com sucesso.</p>";
         } else {
             echo "<p>Ocorreu um erro ao cadastrar o livro: " . $conn->error . "</p>";
         }
-
+    
         $conn->close();
     }
     ?>
