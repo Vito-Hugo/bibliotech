@@ -11,7 +11,7 @@ session_start();
     <link rel="icon" type="image/png" href="img/top.png"/>
     <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
     <title>Biblio - Home</title>
-    
+
 </head>
 <body>
     <header class="header">
@@ -86,15 +86,15 @@ session_start();
     </form>
     
     </div>
+    
 
     <section class="home" id="home">
         <div class="row">
             <div class="content">
-        <h3><?php echo $nome; ?></h3>
-        <div class="autor"><?php echo $autor; ?></div>
-        <div class="sinopse"><?php echo $sinopse; ?></div> <!-- Certifique-se de que a classe .sinopse está presente aqui -->
-        <a href="reserva.php?id=<?php echo $id; ?>" class="btn">Alugar</a>
-    </div>
+                <h3>O melhor lugar para alugar seu livro</h3>
+                <p>Uma biblioteca é o portal encantado onde palavras se transformam em aventuras, conhecimento ganha vida e sonhos encontram asas para voar.</p>
+            
+            </div> 
 
             <div class="swiper books-slider">
                 <div class="swiper-wrapper">
@@ -114,7 +114,7 @@ session_start();
         <div class="icons">
             <i class="fas fa-plane"></i>
             <div class="content">
-                <h3>Frete grítis</h3>
+                <h3>Frete grátis</h3>
                 <p>Para qualquer lugar de itajaí</p>
             </div>
         </div>
@@ -141,7 +141,7 @@ session_start();
         </div>
     </section>
     <section class="featured" id="featured">
-    <h1 class="heading"><span>Livros em destaque</span></h1>
+    <h1 class="heading"><span>Acervo</span></h1>
     <div class="swiper featured-slider">
         <div class="swiper-wrapper">
             <?php
@@ -162,7 +162,7 @@ session_start();
                 $id = $row['id'];
                 $nome = $row['nome'];
                 $autor = $row['autor'];
-                $imagem = $row['imagens'];
+                $imagens = $row['imagens'];
                 $unidade = $row['unidade'];
                 $sinopse = $row['sinopse'];
             ?>
@@ -173,7 +173,7 @@ session_start();
                         <a href="#" class="fas fa-eye"></a>
                     </div>
                     <div class="image">
-                        <img src="img/<?php echo $imagem; ?>" alt="">
+                        <img src="<?php echo $imagens; ?>" alt="">
                     </div>
                     <div class="content">
                         <h3><?php echo $nome; ?></h3>
@@ -233,12 +233,13 @@ $result = $conn->query($sql);
                 while ($row = $result->fetch_assoc()) {
                     $nome = $row["nome"];
                     $autor = $row["autor"];
-                    $imagem = $row["imagens"];
+                    $imagens = $row["imagens"];
                     $unidade = $row["unidade"];
+                    $sinopse = $row['sinopse'];
             ?>
                     <a href="#" class="swiper-slide box">
                         <div class="image">
-                            <img src="img/<?php echo $imagem; ?>" alt="">
+                            <img src="img/<?php echo $imagens; ?>" alt="">
                         </div>
                         <div class="content">
                             <h3><?php echo $nome; ?></h3>

@@ -240,8 +240,8 @@
                 <input type="text" id="codigo" name="codigo" required>
             </div>
             <div>
-                <label for="aluno">Nome do Aluno:</label>
-                <input type="text" id="aluno" name="aluno" required>
+                <label for="aluno">Matrícula:</label>
+                <input type="number" id="aluno" name="aluno" required>
             </div>
         </div>
         <div class="input-group">
@@ -265,8 +265,8 @@
                 <input type="text" id="codigo-renovar" name="codigo-renovar" required>
             </div>
             <div>
-                <label for="aluno-renovar">Nome do Aluno:</label>
-                <input type="text" id="aluno-renovar" name="aluno-renovar" required>
+                <label for="aluno-renovar">Matrícula:</label>
+                <input type="number" id="aluno-renovar" name="aluno-renovar" required>
             </div>
         </div>
         <div class="input-group">
