@@ -18,7 +18,7 @@ session_start();
         <div class="header-1">
             <a href="#" class="logo"><i class="fas fa-book"></i>Bliblio</a>
         
-        <<form action="busca_livro.php" class="search-form" method="GET">
+        <form action="busca_livro.php" class="search-form" method="GET">
     <input type="search" name="livro-nome" placeholder="Procure aqui..." id="search-box">
     <button type="submit"><i class="fas fa-search"></i></button>
 </form>
@@ -35,7 +35,7 @@ session_start();
         <nav class="navbar">
             <a href="#home">Home</a>
             <a href="#destque">Destaque</a>
-            <a href="#lancamento">Lançamenentos</a>
+            <a href="#lancamento">Lançamentos</a>
             <a href="#comentarios">Comentarios</a>
             <a href="#contato">Contato</a>
         </nav>
@@ -90,10 +90,11 @@ session_start();
     <section class="home" id="home">
         <div class="row">
             <div class="content">
-                <h3>O melhor lugar para alugar seu livro</h3>
-                <p>Uma biblioteca é o portal encantado onde palavras se transformam em aventuras, conhecimento ganha vida e sonhos encontram asas para voar.</p>
-                <a href="reserva.php" class="btn">Alugar</a>
-            </div>
+        <h3><?php echo $nome; ?></h3>
+        <div class="autor"><?php echo $autor; ?></div>
+        <div class="sinopse"><?php echo $sinopse; ?></div> <!-- Certifique-se de que a classe .sinopse está presente aqui -->
+        <a href="reserva.php?id=<?php echo $id; ?>" class="btn">Alugar</a>
+    </div>
 
             <div class="swiper books-slider">
                 <div class="swiper-wrapper">
@@ -163,6 +164,7 @@ session_start();
                 $autor = $row['autor'];
                 $imagem = $row['imagens'];
                 $unidade = $row['unidade'];
+                $sinopse = $row['sinopse'];
             ?>
                 <div class="swiper-slide box">
                     <div class="icons">
@@ -266,7 +268,40 @@ $result = $conn->query($sql);
 </section>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <div id="sinopse-modal" class="modal">
+    <div class="modal-content">
+        <span id="close-modal-btn" class="close-modal-btn">&times;</span>
+        <div id="sinopse-modal-content"></div>
+    </div>
+</div>
 
+<script>
+    const sinopseButtons = document.querySelectorAll('.fa-eye');
+    const sinopseModal = document.getElementById('sinopse-modal');
+    const sinopseModalContent = document.getElementById('sinopse-modal-content');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+
+    function showSinopse(event) {
+        const sinopse = event.target.parentElement.parentElement.querySelector('.sinopse').textContent;
+        sinopseModalContent.textContent = sinopse;
+        sinopseModal.style.display = 'block';
+    }
+
+    sinopseButtons.forEach(button => {
+        button.addEventListener('click', showSinopse);
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+        sinopseModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === sinopseModal) {
+            sinopseModal.style.display = 'none';
+        }
+    });
+</script>
     <script src="js/script.js"></script>
+    
 </body>
 </html>
