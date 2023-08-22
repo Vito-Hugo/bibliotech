@@ -139,6 +139,7 @@ section{
 .header .header-1 .icons div:hover,
 .header .header-1 .icons a:hover{
     color: var(--verde);
+    
 }
 
 #search-btn{
@@ -640,3 +641,4 @@ transform: translateY(6rem);
     }
 
 }
+

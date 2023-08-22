@@ -11,8 +11,12 @@ session_start();
     <link rel="icon" type="image/png" href="img/top.png"/>
     <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
     <title>Biblio - Home</title>
-
+    <link rel="stylesheet" href="css/style.css">
 </head>
+<style>
+
+    
+</style>
 <body>
     <header class="header">
         <div class="header-1">
@@ -25,68 +29,21 @@ session_start();
 
         <div class="icons">
             <div id="search-btn" class="fas fa-search"></div>
-            <a href="#" class="fas fa-heart"></a>
-            <a href="reservados.php" class="fas fa-shopping-cart"></a>
-            <div id='login-btn' class="fas fa-user"></div>
+        
             <a href="logout.php">sair</a>
         </div>
     </div>
     <div class="header-2">
         <nav class="navbar">
-            <a href="#home">Home</a>
-            <a href="#destque">Destaque</a>
+            <a href="#home"></a>
+            <!-- <a href="#destque">Destaque</a>
             <a href="#lancamento">Lançamentos</a>
             <a href="#comentarios">Comentarios</a>
-            <a href="#contato">Contato</a>
+            <a href="#contato">Contato</a> -->
         </nav>
     </div>
     </header>
 
-    <nav class="bottom-navbar">
-        <a href="#home" class="fas fa-home"></a>
-        <a href="#destque" class="fas fa-list"></a>
-        <a href="#lancamento" class="fas fa-tags"></a>
-        <a href="#comentarios" class="fas fa-comments"></a>
-        <a href="#contato" class="fas fa-blogs"></a>
-    </nav>
-
-    <div class="login-form-container">
-        <div id="close-login-btn" class="fas fa-times"></div>
-        <form action="login.php" method="POST">
-            <h3>Entrar</h3>
-            <span>Email</span>
-            <input type="email" class="box" name="email" placeholder="Digite seu email" id="email">
-            <span>Senha</span>
-            <input type="password" class="box" name="senha" placeholder="Digite sua senha" id="senha">
-            
-            <div class="checkbox">
-                <input type="checkbox" name="lembrar" id="remember-me">
-                <label for="remember-me">Lembre-me</label>
-            </div>
-            
-            <input type="submit" value="Entrar" class="btn">
-            <p>Esqueceu sua senha? <a href="#">clique aqui</a></p>
-        </form>
-        
-    <form action="cadastro.php" method="POST">
-        <h3>Cadastrar</h3>
-        <span>Nome</span>
-        <input type="text" class="box" name="nome" placeholder="Digite seu nome" id="nome">
-        <span>Email</span>
-        <input type="email" class="box" name="email" placeholder="Digite seu email" id="email">
-        <span>Senha</span>
-        <input type="password" class="box" name="senha" placeholder="Digite sua senha" id="senha">
-        
-        <div class="checkbox">
-            <input type="checkbox" name="lembrar" id="remember-me">
-            <label for="remember-me">Lembre-me</label>
-        </div>
-        
-        <input type="submit" value="Cadastrar" class="btn">
-    </form>
-    
-    </div>
-    
 
     <section class="home" id="home">
         <div class="row">
@@ -166,28 +123,30 @@ session_start();
                 $unidade = $row['unidade'];
                 $sinopse = $row['sinopse'];
             ?>
-                <div class="swiper-slide box">
-                    <div class="icons">
-                        <a href="#" class="fas fa-search"></a>
-                        <a href="#" class="fas fa-heart"></a>
-                        <a href="#" class="fas fa-eye"></a>
-                    </div>
-                    <div class="image">
-                        <img src="<?php echo $imagens; ?>" alt="">
-                    </div>
-                    <div class="content">
-                        <h3><?php echo $nome; ?></h3>
-                        <div class="autor"><?php echo $autor; ?></div>
-                        <a href="reserva.php?id=<?php echo $id; ?>" class="btn">Alugar</a>
-                    </div>
-                </div>
                 
-            <?php
-            }
+                <div class="swiper-slide box" style="height: 450px; background-color: #f2f2f2;">
+    <div class="icons">
+        <!-- Ícones e outros elementos de interação do livro -->
+    </div>
+    <div class="image">
+        <a href="descricao.php?id=<?php echo $id; ?>" class="book-link">
+            <img src="<?php echo $imagens; ?>" alt="">
+        </a>
+    </div>
+    <div class="content">
+        <h3><?php echo $nome; ?></h3>
+        <div class="autor"><?php echo $autor; ?></div>
+        <!-- Outras informações do livro -->
+    </div>
+</div>
+                
+<?php
+}
 
             // Fecha a conexão com o banco de dados
             mysqli_close($conexao);
             ?>
+
         </div>
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
