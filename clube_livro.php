@@ -226,7 +226,7 @@
                 <button type="submit">Retirar Livro</button>
                 <form method="POST" action="historico_livros.php">
                 <!-- Here you can add any additional input fields if needed -->
-                <button type="submit">Ver Histórico</button>
+                <button type="submit"><a href="historico_livros.php"> Ver Histórico</a></button>
             </form>
             </form>
             

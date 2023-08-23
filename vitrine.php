@@ -10,7 +10,7 @@ session_start();
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/png" href="img/top.png"/>
     <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
-    <title>Biblio - Home</title>
+    <title>BiblioTech - Home</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <style>

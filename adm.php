@@ -207,7 +207,7 @@
     <div class="sidebar">
         <ul>
             <img src="./img/logo.png" alt="" width="200" height="50">
-            <li><a href="#">Emprestimo</a></li>
+            <li><a href="#">Empréstimo</a></li>
             <li><a href="usuarios.php">Alunos</a></li>
             <li><a href="clube_livro.php">Clube do Livro</a></li>
             <li><a href="#">Projeto de Leitura</a></li>

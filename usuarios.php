@@ -116,6 +116,11 @@
         .sidebar ul img{
             margin-bottom: 20px;
         }  
+        .white-bg {
+    border-radius: 50%; /* Isso pode ajudar a criar um fundo circular para os ícones */
+    padding: 5px; /* Pode ajustar o espaçamento em torno dos ícones */
+    color: #FF0000; /* Mantém a cor do ícone */
+}
     </style>
 </head>
 <body>
@@ -148,7 +153,7 @@
         </ul>
     </div>
     <div class="container">
-        <h2>Lista de Professores</h2>
+        <h2>Lista de Alunos</h2>
         <div class="table-container">
             <table>
                 <thead>
@@ -157,7 +162,8 @@
                         <th>Email</th>
                         <th>Matricula</th>
                         <th>Ano</th>
-                        <th>Turma</th>
+                        <th>Historico</th>
+                        <th>Edição</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -186,9 +192,15 @@
                             echo "<td>" . $row["email"] . "</td>";
                             echo "<td>" . $row["matricula"] . "</td>";
                             echo "<td>" . $row["turma"] . "</td>";
-                            echo "<td>";
+                            echo "<td>"; // Coluna de Histórico
+                        
+                            // Aqui você pode exibir o histórico, por exemplo:
+                            echo "<p>Historico</p>"; // Substitua isso pelo conteúdo do histórico
+                        
+                            echo "</td>";
+                            echo "<td>"; // Coluna de Edição e Exclusão
                             echo "<span class='edit-icon' title='Editar' onclick='editarProfessor(" . $row["id"] . ")'>&#9998;</span>";
-                            echo "<span class='delete-icon' title='Excluir' onclick='excluirProfessor(" . $row["id"] . ")'>&#128465;</span>";
+                            echo "<span class='delete-icon white-bg' title='Excluir' onclick='excluirProfessor(" . $row["id"] . ")'>&#128465;</span>";
                             echo "</td>";
                             echo "</tr>";
                         }
