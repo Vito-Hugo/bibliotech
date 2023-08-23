@@ -24,7 +24,7 @@ session_start();
         
             <form action="busca_livro.php" class="search-form" method="GET">
     <select name="tipo-pesquisa">
-        <option value="nome">Títulofsdf</option>
+        <option value="nome">Título</option>
         <option value="autor">Autor</option>
         <option value="letra">Letra</option>
     </select>
