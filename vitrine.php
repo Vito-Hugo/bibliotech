@@ -20,9 +20,14 @@ session_start();
 <body>
     <header class="header">
         <div class="header-1">
-            <a href="#" class="logo"><i class="fas fa-book"></i>Bliblio</a>
+            <a href="#" class="logo"><i class="fas fa-book"></i>BliblioTech</a>
         
-        <form action="busca_livro.php" class="search-form" method="GET">
+            <form action="busca_livro.php" class="search-form" method="GET">
+    <select name="tipo-pesquisa">
+        <option value="nome">Título</option>
+        <option value="autor">Autor</option>
+        <option value="letra">Letra</option>
+    </select>
     <input type="search" name="livro-nome" placeholder="Procure aqui..." id="search-box">
     <button type="submit"><i class="fas fa-search"></i></button>
 </form>
