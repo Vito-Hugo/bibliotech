@@ -133,12 +133,9 @@
             </div>
             <div class="input-group">
                 <label for="matricula">Matrícula:</label>
-                <input type="text" name="matricula" required><br>
+                <input type="number" name="matricula" id="matricula" maxlength="10" required><br>
             </div>
-            <div class="input-group">
-                <label for="ano">Ano:</label>
-                <input type="number" name="ano" required><br>
-            </div>
+            
             <div class="input-group">
                 <label for="turma">Turma:</label>
                 <input type="text" name="turma" required><br>
@@ -156,5 +153,12 @@
             </div>
         </form>
     </div>
+    <script>
+    document.getElementById("matricula").addEventListener("input", function() {
+    if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10); // Limita a 10 dígitos
+    }
+});
+</script>
 </body>
 </html>

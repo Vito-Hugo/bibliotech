@@ -161,6 +161,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    
                     <?php
                     // Conectar ao banco de dados
                     $servername = "localhost";
@@ -174,6 +175,13 @@
                     if ($conn->connect_error) {
                         die("Falha na conexão com o banco de dados: " . $conn->connect_error);
                     }
+                    function formatarCPF($cpf) {
+                        $parte1 = substr($cpf, 0, 3);
+                        $parte2 = substr($cpf, 3, 3);
+                        $parte3 = substr($cpf, 6, 3);
+                        $parte4 = substr($cpf, 9, 2);
+                        return "$parte1.$parte2.$parte3-$parte4";
+                    }
 
                     // Consulta SQL para recuperar os professores cadastrados
                     $sql = "SELECT * FROM professores";
@@ -184,7 +192,7 @@
                             echo "<tr>";
                             echo "<td>" . $row["nome"] . "</td>";
                             echo "<td>" . $row["email"] . "</td>";
-                            echo "<td>" . $row["cpf"] . "</td>";
+                            echo "<td>" . formatarCPF($row["cpf"]) . "</td>"; // Aplicando a formatação
                             echo "<td>" . $row["disciplina"] . "</td>";
                             echo "<td>";
                             echo "<span class='edit-icon' title='Editar' onclick='editarProfessor(" . $row["id"] . ")'>&#9998;</span>";
@@ -203,6 +211,7 @@
             </table>
         </div>
     </div>
+    
 
     <script>
     function editarProfessor(professorId) {

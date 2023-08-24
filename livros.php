@@ -274,7 +274,8 @@
                 <th>Editora</th>
                 <th>Idioma</th>
                 <th>Posição do Livro</th>
-                <th>Status</th>
+                <th>codigo</th>
+                <th>Unidade</th>
                 <th>Ações</th>
             </tr>
             <?php
@@ -313,6 +314,7 @@
                 echo "<td>" . $row['editora'] . "</td>";
                 echo "<td>" . $row['idioma'] . "</td>";
                 echo "<td>" . $row['posicao'] . "</td>";
+                echo "<td>" . $row['codigo'] . "</td>";
                 echo "<td>" . $row['unidade'] . "</td>";
                 echo "<td>
                         <div class='action-icons'>

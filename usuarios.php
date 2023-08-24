@@ -161,7 +161,7 @@
                         <th>Nome</th>
                         <th>Email</th>
                         <th>Matricula</th>
-                        <th>Ano</th>
+                        <th>Turma</th>
                         <th>Historico</th>
                         <th>Edição</th>
                     </tr>
@@ -199,8 +199,8 @@
                         
                             echo "</td>";
                             echo "<td>"; // Coluna de Edição e Exclusão
-                            echo "<span class='edit-icon' title='Editar' onclick='editarProfessor(" . $row["id"] . ")'>&#9998;</span>";
-                            echo "<span class='delete-icon white-bg' title='Excluir' onclick='excluirProfessor(" . $row["id"] . ")'>&#128465;</span>";
+                            echo "<span class='edit-icon' title='Editar' onclick='editarUsuario(" . $row["id"] . ")'>&#9998;</span>";
+                            echo "<span class='delete-icon white-bg' title='Excluir' onclick='excluirUsuario(" . $row["id"] . ")'>&#128465;</span>";
                             echo "</td>";
                             echo "</tr>";
                         }
@@ -217,33 +217,14 @@
     </div>
 
     <script>
-    function editarProfessor(id) {
-        // Redirecionar para a página de edição do professor com o ID fornecido
-        window.location.href = "editar_professor.php?id=" + id;
+    function editarUsuario(usuarioId) {
+        window.location.href = 'editar_usuario.php?id=' + usuarioId;
+        
     }
 
-    function excluirProfessor(id) {
-        // Exibir uma confirmação de exclusão usando a função confirm do JavaScript
-        if (confirm("Deseja realmente excluir este professor?")) {
-            // Implemente a lógica para excluir o professor com o ID fornecido
-            // Por exemplo, você pode enviar uma solicitação AJAX para um arquivo PHP que executa a exclusão no banco de dados
-            // Após a exclusão, você pode atualizar a página ou realizar outras ações necessárias
-
-            // Exemplo de código AJAX para excluir o professor usando jQuery
-            $.ajax({
-                url: "excluir_professor.php",
-                type: "POST",
-                data: { id: id },
-                success: function (response) {
-                    // Ação bem-sucedida após a exclusão (por exemplo, atualizar a tabela de professores)
-                    // Você pode realizar qualquer ação necessária aqui
-                    // Por exemplo, atualizar a tabela de professores ou redirecionar para uma página específica
-                },
-                error: function (xhr, status, error) {
-                    // Lidar com erros na exclusão do professor (por exemplo, exibir uma mensagem de erro)
-                    // Você pode realizar qualquer ação necessária aqui
-                }
-            });
+    function excluirUsuario(usuarioId) {
+        if (confirm('Tem certeza de que deseja excluir este usuario?')) {
+            window.location.href = 'excluir_usuario.php?id=' + usuarioId;
         }
     }
 </script>

@@ -169,15 +169,20 @@
     </style>
 </head>
 <body>
-    <?php
-    session_start();
-    if (!isset($_SESSION["nome_usuario"])) {
-        header("Location: cadastro_professor.html");
-        exit;
-    }
-    $nomeUsuario = $_SESSION["nome_usuario"];
+<?php
+session_start();
+if (!isset($_SESSION["nome_usuario"])) {
+    header("Location: cadastro_professor.html");
+    exit;
+}
+$nomeUsuario = $_SESSION["nome_usuario"];
 
-    // Conexão com o banco de dados
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codigo"]) && isset($_POST["matricula"]) && isset($_POST["retirada"]) && isset($_POST["entrega"])) {
+    $codigo = $_POST["codigo"];
+    $matricula = $_POST["matricula"];
+    $retirada = $_POST["retirada"];
+    $entrega = $_POST["entrega"];
+
     $servername = "localhost";
     $username = "root";
     $password = "root";
@@ -188,15 +193,19 @@
         die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
     }
 
-    // Consulta para recuperar a quantidade de livros cadastrados
-    $sql = "SELECT COUNT(*) AS total FROM livros";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $quantidadeLivros = $row['total'];
+    $sql_emprestimo = "INSERT INTO emprestimos (codigo_livro, nome_aluno, data_retirada, data_entrega)
+                       VALUES ('$codigo', '$matricula', '$retirada', '$entrega')";
 
-    // Fechando a conexão com o banco de dados
+    if (mysqli_query($conn, $sql_emprestimo)) {
+        echo "<p class='success-message'>Empréstimo realizado com sucesso.</p>";
+    } else {
+        echo "<p class='error-message'>Ocorreu um erro ao realizar o empréstimo: " . mysqli_error($conn) . "</p>";
+    }
+
     mysqli_close($conn);
-    ?>
+}
+?>
+
     <header>
         <h1>Administração da Biblioteca</h1>
         <div class="user-info">
@@ -216,21 +225,21 @@
             <li><a href="livros.php">Livros</a></li>
         </ul>
     </div>
-    <div class="container">
-        <div class="box-container">
-            <div class="box">
-                <h2>Livros</h2>
-                <p><?php echo $quantidadeLivros; ?></p>
-            </div>
-            <div class="box">
-                <h2>Emprestados</h2>
-                <p>20</p>
-            </div>
-            <div class="box">
-                <h2>Atrasados</h2>
-                <p>5</p>
-            </div>
-        </div>
+    <div class="box-container">
+    <div class="box">
+        <h2>Livros</h2>
+        <p><?php echo $quantidadeLivros; ?></p>
+    </div>
+    <div class="box">
+        <h2><a href="emprestados.php" style="color: inherit; text-decoration: none;">Emprestados</a></h2>
+        <p><?php echo $quantidadeLivrosEmprestados; ?></p>
+    </div>
+    <div class="box">
+        <h2>Atrasados</h2>
+        <p>5</p>
+    </div>
+</div>
+        
         <div class="form-container">
     <form method="POST" action="">
         <h2>Empréstimo</h2>
@@ -239,10 +248,8 @@
                 <label for="codigo">Código do Livro:</label>
                 <input type="text" id="codigo" name="codigo" required>
             </div>
-            <div>
-                <label for="aluno">Matrícula:</label>
-                <input type="number" id="aluno" name="aluno" required>
-            </div>
+            <label for="matricula">Matrícula:</label>
+            <input type="number" id="matricula" name="matricula" required>
         </div>
         <div class="input-group">
             <div>
@@ -266,7 +273,7 @@
             </div>
             <div>
                 <label for="aluno-renovar">Matrícula:</label>
-                <input type="number" id="aluno-renovar" name="aluno-renovar" required>
+                <input type="number" id="matricula" name="matricula" required>
             </div>
         </div>
         <div class="input-group">
@@ -318,8 +325,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codigo"]) && isset($_P
     $entrega = escape_input($conn, $_POST["entrega"]);
 
     // Insere os dados na tabela de empréstimos
-    $sql_emprestimo = "INSERT INTO emprestimos (codigo_livro, nome_aluno, data_retirada, data_entrega)
-                       VALUES ('$codigo', '$aluno', '$retirada', '$entrega')";
+    $sql_emprestimo = "INSERT INTO emprestimos (codigo_livro, nome_aluno, matricula_aluno ,data_retirada, data_entrega)
+                       VALUES ('$codigo', '$aluno','matricula_aluno', '$retirada', '$entrega')";
 
     if (mysqli_query($conn, $sql_emprestimo)) {
         echo "<p class='success-message'>Empréstimo realizado com sucesso.</p>";
