@@ -166,46 +166,55 @@
     }
 
 
+
     </style>
 </head>
 <body>
-<?php
-session_start();
-if (!isset($_SESSION["nome_usuario"])) {
-    header("Location: cadastro_professor.html");
-    exit;
-}
-$nomeUsuario = $_SESSION["nome_usuario"];
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codigo"]) && isset($_POST["matricula"]) && isset($_POST["retirada"]) && isset($_POST["entrega"])) {
-    $codigo = $_POST["codigo"];
-    $matricula = $_POST["matricula"];
-    $retirada = $_POST["retirada"];
-    $entrega = $_POST["entrega"];
-
-    $servername = "localhost";
-    $username = "root";
-    $password = "root";
-    $dbname = "bibliotech";
-
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-    if (!$conn) {
-        die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
-    }
-
-    $sql_emprestimo = "INSERT INTO emprestimos (codigo_livro, nome_aluno, data_retirada, data_entrega)
-                       VALUES ('$codigo', '$matricula', '$retirada', '$entrega')";
-
-    if (mysqli_query($conn, $sql_emprestimo)) {
-        echo "<p class='success-message'>Empréstimo realizado com sucesso.</p>";
-    } else {
-        echo "<p class='error-message'>Ocorreu um erro ao realizar o empréstimo: " . mysqli_error($conn) . "</p>";
-    }
-
-    mysqli_close($conn);
-}
-?>
-
+    <?php
+ session_start();
+ if (!isset($_SESSION["nome_usuario"])) {
+     header("Location: cadastro_professor.html");
+     exit;
+ }
+ $nomeUsuario = $_SESSION["nome_usuario"];
+ 
+ // Conexão com o banco de dados
+ $servername = "localhost";
+ $username = "root";
+ $password = "root";
+ $dbname = "bibliotech";
+ 
+ $conn = mysqli_connect($servername, $username, $password, $dbname);
+ if (!$conn) {
+     die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
+ }
+ 
+ // Verifica se o formulário de empréstimo foi enviado
+ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codigo"]) && isset($_POST["aluno"]) && isset($_POST["retirada"]) && isset($_POST["entrega"])) {
+     $codigoLivro = $_POST["codigo"];
+     $nomeAluno = $_POST["aluno"];
+     $dataRetirada = $_POST["retirada"];
+     $dataEntrega = $_POST["entrega"];
+     
+     // Inserir os dados na tabela de empréstimos
+     $sqlEmprestimos = "INSERT INTO emprestimos (codigo_livro, nome_aluno, data_retirada, data_entrega) VALUES ('$codigoLivro', '$nomeAluno', '$dataRetirada', '$dataEntrega')";
+     
+     if (mysqli_query($conn, $sqlEmprestimos)) {
+         $successMessage = "Empréstimo realizado com sucesso!";
+     } else {
+         $errorMessage = "Erro ao realizar o empréstimo: " . mysqli_error($conn);
+     }
+ }
+ 
+ // Consulta para recuperar a quantidade de livros cadastrados
+ $sqlQuantidadeLivros = "SELECT COUNT(*) AS unidade FROM livros";
+ $resultQuantidadeLivros = mysqli_query($conn, $sqlQuantidadeLivros);
+ $rowQuantidadeLivros = mysqli_fetch_assoc($resultQuantidadeLivros);
+ $quantidadeLivros = $rowQuantidadeLivros['unidade'];
+ 
+ // Fechando a conexão com o banco de dados
+ mysqli_close($conn);
+ ?>
     <header>
         <h1>Administração da Biblioteca</h1>
         <div class="user-info">
@@ -225,31 +234,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codigo"]) && isset($_P
             <li><a href="livros.php">Livros</a></li>
         </ul>
     </div>
-    <div class="box-container">
-    <div class="box">
-        <h2>Livros</h2>
-        <p><?php echo $quantidadeLivros; ?></p>
-    </div>
-    <div class="box">
-        <h2><a href="emprestados.php" style="color: inherit; text-decoration: none;">Emprestados</a></h2>
-        <p><?php echo $quantidadeLivrosEmprestados; ?></p>
-    </div>
-    <div class="box">
-        <h2>Atrasados</h2>
-        <p>5</p>
-    </div>
-</div>
-        
+    <div class="container">
+        <div class="box-container">
+            <div class="box">
+                <h2>Livros</h2>
+                <p><?php echo $quantidadeLivros; ?></p>
+            </div>
+            <div class="box">
+                <h2>Emprestados</h2>
+                <p>20</p>
+            </div>
+            <div class="box">
+                <h2>Atrasados</h2>
+                <p>5</p>
+            </div>
+        </div>
         <div class="form-container">
-    <form method="POST" action="">
+    <form action="" method="POST">
         <h2>Empréstimo</h2>
         <div class="input-group">
             <div>
                 <label for="codigo">Código do Livro:</label>
                 <input type="text" id="codigo" name="codigo" required>
             </div>
-            <label for="matricula">Matrícula:</label>
-            <input type="number" id="matricula" name="matricula" required>
+            <div>
+                <label for="aluno">Nome do Aluno:</label>
+                <input type="text" id="aluno" name="aluno" required>
+            </div>
         </div>
         <div class="input-group">
             <div>
@@ -261,10 +272,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codigo"]) && isset($_P
                 <input type="date" id="entrega" name="entrega" required>
             </div>
         </div>
-        <button type="submit">Realizar Empréstimo</button>
+        <button type="submit" name="emprestimoSubmit">Realizar Empréstimo</button>
     </form>
 
-    <form method="POST" action="">
+    <form action="" method="POST">
         <h2>Renovação de Empréstimo</h2>
         <div class="input-group">
             <div>
@@ -272,8 +283,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codigo"]) && isset($_P
                 <input type="text" id="codigo-renovar" name="codigo-renovar" required>
             </div>
             <div>
-                <label for="aluno-renovar">Matrícula:</label>
-                <input type="number" id="matricula" name="matricula" required>
+                <label for="aluno-renovar">Nome do Aluno:</label>
+                <input type="text" id="aluno-renovar" name="aluno-renovar" required>
             </div>
         </div>
         <div class="input-group">
@@ -286,78 +297,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codigo"]) && isset($_P
                 <input type="date" id="entrega-renovar" name="entrega-renovar" required>
             </div>
         </div>
-        <button type="submit">Renovar Empréstimo</button>
+       <button type="submit" name="renovacaoSubmit">Renovar Empréstimo</button>
     </form>
 </div>
-<?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Verifica se o usuário está logado, caso contrário, redireciona para a página de login
-if (!isset($_SESSION["nome_usuario"])) {
-    header("Location: cadastro_professor.html");
-    exit;
-}
-
-// Conexão com o banco de dados
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "bibliotech";
-
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-if (!$conn) {
-    die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
-}
-
-// Função para escapar caracteres especiais
-function escape_input($conn, $input)
-{
-    return mysqli_real_escape_string($conn, $input);
-}
-
-// Verifica se o formulário de empréstimo foi submetido
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codigo"]) && isset($_POST["aluno"]) && isset($_POST["retirada"]) && isset($_POST["entrega"])) {
-    $codigo = escape_input($conn, $_POST["codigo"]);
-    $aluno = escape_input($conn, $_POST["aluno"]);
-    $retirada = escape_input($conn, $_POST["retirada"]);
-    $entrega = escape_input($conn, $_POST["entrega"]);
-
-    // Insere os dados na tabela de empréstimos
-    $sql_emprestimo = "INSERT INTO emprestimos (codigo_livro, nome_aluno, matricula_aluno ,data_retirada, data_entrega)
-                       VALUES ('$codigo', '$aluno','matricula_aluno', '$retirada', '$entrega')";
-
-    if (mysqli_query($conn, $sql_emprestimo)) {
-        echo "<p class='success-message'>Empréstimo realizado com sucesso.</p>";
-    } else {
-        echo "<p class='error-message'>Ocorreu um erro ao realizar o empréstimo: " . mysqli_error($conn) . "</p>";
-    }
-}
-
-// Verifica se o formulário de renovação foi submetido
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codigo-renovar"]) && isset($_POST["aluno-renovar"]) && isset($_POST["retirada-renovar"]) && isset($_POST["entrega-renovar"])) {
-    $codigo_renovar = escape_input($conn, $_POST["codigo-renovar"]);
-    $aluno_renovar = escape_input($conn, $_POST["aluno-renovar"]);
-    $retirada_renovar = escape_input($conn, $_POST["retirada-renovar"]);
-    $entrega_renovar = escape_input($conn, $_POST["entrega-renovar"]);
-
-    // Atualiza as informações de empréstimo na tabela de empréstimos
-    $sql_renovar = "UPDATE emprestimos SET data_retirada='$retirada_renovar', data_entrega='$entrega_renovar'
-                    WHERE codigo_livro='$codigo_renovar' AND nome_aluno='$aluno_renovar'";
-
-    if (mysqli_query($conn, $sql_renovar)) {
-        echo "<p class='success-message'>Renovação de empréstimo realizada com sucesso.</p>";
-    } else {
-        echo "<p class='error-message'>Ocorreu um erro ao renovar o empréstimo: " . mysqli_error($conn) . "</p>";
-    }
-}
-
-// Fechando a conexão com o banco de dados
-mysqli_close($conn);
-?>
-
-
     </div>
 </body>
 </html>

@@ -25,6 +25,7 @@ if (isset($_GET['id'])) {
         $imagens = $row['imagens'];
         $unidade = $row['unidade'];
         $sinopse = $row['sinopse'];
+        $posicao = $row['posicao'];
     } else {
         // Caso o livro não seja encontrado, você pode exibir uma mensagem de erro ou redirecionar o usuário para uma página de erro
         $error_message = "Livro não encontrado.";
@@ -115,15 +116,16 @@ mysqli_close($conexao);
     ?>
     <div class="book-details">
     <button class="back-button" onclick="goBack()">Voltar</button>
-        <img src="<?php echo $imagens; ?>" alt="">
-        <h1><?php echo $nome; ?></h1>
-        <p>Autor: <?php echo $autor; ?></p>
-        <p>Unidade: <?php echo $unidade; ?></p>
-        <div class="sinopse-box">
-                <p><strong>Sinopse:</strong></p>
-                <p><?php echo $sinopse; ?></p>
-            </div>
+    <img src="<?php echo $imagens; ?>" alt="">
+    <h1><?php echo $nome; ?></h1>
+    <p>Autor: <?php echo $autor; ?></p>
+    <p>Unidade: <?php echo $unidade; ?></p>
+    <p>Posição: <?php echo $posicao; ?></p> <!-- Mostra a posição do livro -->
+    <div class="sinopse-box">
+        <p><strong>Sinopse:</strong></p>
+        <p><?php echo $sinopse; ?></p>
     </div>
+</div>
     <?php
     }
     ?>

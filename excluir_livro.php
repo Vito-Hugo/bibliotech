@@ -1,13 +1,13 @@
 <?php
-// Verificar se o ID do professor foi fornecido
-if (isset($_POST["id"])) {
-    $idProfessor = $_POST["id"];
+// Verificar se o ID do livro foi fornecido
+if (isset($_POST["livro_id"])) {
+    $livroId = $_POST["livro_id"];
 
     // Conectar ao banco de dados
     $servername = "localhost";
-    $username = "seu_usuario";
-    $password = "sua_senha";
-    $dbname = "seu_banco_de_dados";
+    $username = "root";
+    $password = "root";
+    $dbname = "bibliotech";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -16,17 +16,18 @@ if (isset($_POST["id"])) {
         die("Falha na conexão com o banco de dados: " . $conn->connect_error);
     }
 
-    // Excluir o professor da tabela
-    $sql = "DELETE FROM professores WHERE id = $idProfessor";
+    // Excluir o livro da tabela
+    $sql = "DELETE FROM livros WHERE id = $livroId";
     if ($conn->query($sql) === TRUE) {
-        echo "O professor foi excluído com sucesso.";
+        echo "O livro foi excluído com sucesso.";
     } else {
-        echo "Ocorreu um erro ao excluir o professor: " . $conn->error;
+        echo "Ocorreu um erro ao excluir o livro: " . $conn->error;
     }
 
     // Fechar a conexão com o banco de dados
     $conn->close();
+    header("Location: livros.php");
 } else {
-    echo "ID do professor não fornecido.";
+    echo "ID do livro não fornecido.";
 }
 ?>

@@ -18,6 +18,8 @@
             padding: 10px;
             display: flex;
             align-items: center;
+            position: relative; /* Adicione esta linha */
+            z-index: 1000;
         }
 
         header h1 {
@@ -28,10 +30,13 @@
         .sidebar {
             background-color: #f2f2f2;
             width: 200px;
-            height: 100vh;
+            height: 100%;
             padding: 20px;
-            float: left;
             box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 30px; /* Adicione esta linha para adicionar espaço acima da barra lateral */
+            left: 0;
+            overflow-y: auto; 
         }
 
         .sidebar ul {
@@ -58,7 +63,8 @@
 
         .container {
             margin: 20px;
-            overflow: hidden;
+            margin-left: 240px;
+            padding-top: 20px;
         }
 
         .form-container {
@@ -237,7 +243,14 @@
             margin-right: 4px;
         }
     </style>
+    <script>
+    function confirmDelete() {
+        return confirm("Tem certeza de que deseja excluir este livro?");
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
     <header>
         <h1>Administração da Biblioteca</h1>
@@ -247,17 +260,20 @@
         </div>
     </header>
     <div class="sidebar">
-        <ul>
+        <div class="sidebar-content">
             <img src="./img/logo.png" alt="" width="200" height="50">
-            <li><a href="adm.php">Emprestimo</a></li>
-            <li><a href="usuarios.php">Alunos</a></li>
-            <li><a href="clube_livro.php">Clube do Livro</a></li>
-            <li><a href="clube_livro.php">Projeto de Leitura</a></li>
-            <li><a href="professores.php">Professores</a></li>
-            <li><a href="cadastro_livro.php">Cadastro de Livros</a></li>
-            <li><a href="livros.php">Livros</a></li>
+            <ul>
+                <li><a href="adm.php">Emprestimo</a></li>
+                <li><a href="usuarios.php">Alunos</a></li>
+                <li><a href="clube_livro.php">Clube do Livro</a></li>
+                <li><a href="clube_livro.php">Projeto de Leitura</a></li>
+                <li><a href="professores.php">Professores</a></li>
+                <li><a href="cadastro_livro.php">Cadastro de Livros</a></li>
+                <li><a href="livros.php">Livros</a></li>
         </ul>
+        </div>
     </div>
+
     <div class="container">
         <h2>Livros Cadastrados</h2>
         <div class="search-form">
@@ -318,17 +334,18 @@
                 echo "<td>" . $row['unidade'] . "</td>";
                 echo "<td>
                         <div class='action-icons'>
+                        <a href='editar_livro.php?codigo=" . $row['codigo'] . "'><i class='fas fa-pencil-alt'></i></a>
                             <form action='atualizar_livro.php' method='post'>
                                 <input type='hidden' name='livro_id' value='" . $row['id'] . "'>
-                                
                                 <button type='submit' name='acao' value='adicionar'><i class='fas fa-plus'></i></button>
                                 <input type='number' class='quantity-input' name='quantidade' value='1' min='1'>
                                 <button type='submit' name='acao' value='remover'><i class='fas fa-minus'></i></button>
                             </form>
-                            <form action='excluir_livro.php' method='post'>
-                                <input type='hidden' name='livro_id' value='" . $row['id'] . "'>
-                                <button type='submit' name='acao' value='excluir' class='delete-icon'><i class='fas fa-trash'></i></button>
-                            </form>
+                            <form action='excluir_livro.php' method='post' onsubmit='return confirmDelete();'>
+                            <input type='hidden' name='livro_id' value='" . $row['id'] . "'>
+                            <button type='submit' name='acao' value='excluir' class='delete-icon'><i class='fas fa-trash'></i></button>
+                        </form>
+
                         </div>
                       </td>";
                 echo "</tr>";
@@ -339,5 +356,17 @@
             ?>
         </table>
     </div>
+    <script>
+    $(document).ready(function() {
+        var sidebar = $(".sidebar");
+        var headerHeight = $("header").outerHeight();
+        
+        $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+            var sidebarTop = Math.max(headerHeight - scroll, 0);
+            sidebar.css("top", sidebarTop + "px");
+    });
+});
+</script>
 </body>
 </html>
