@@ -228,7 +228,6 @@
             <li><a href="#">Empréstimo</a></li>
             <li><a href="usuarios.php">Alunos</a></li>
             <li><a href="clube_livro.php">Clube do Livro</a></li>
-            <li><a href="#">Projeto de Leitura</a></li>
             <li><a href="professores.php">Professores</a></li>
             <li><a href="cadastro_livro.php">Cadastro de Livros</a></li>
             <li><a href="livros.php">Livros</a></li>
@@ -299,6 +298,9 @@
         </div>
        <button type="submit" name="renovacaoSubmit">Renovar Empréstimo</button>
     </form>
+    
+  
+
 </div>
     </div>
 </body>

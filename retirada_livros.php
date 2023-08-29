@@ -1,56 +1,55 @@
 <?php
 session_start();
+
 if (!isset($_SESSION["nome_usuario"])) {
     header("Location: cadastro_professor.html");
     exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $livro = $_POST["livro"];
-    $aluno = $_POST["aluno"];
-    
-    // Conexão com o banco de dados
-    $servername = "localhost";
-    $username = "root";
-    $password = "root";
-    $dbname = "bibliotech";
+// Define o fuso horário
+date_default_timezone_set('America/Sao_Paulo'); // Substitua pelo fuso horário correto
 
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-    if (!$conn) {
-        die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
-    }
+// Conexão com o banco de dados
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "bibliotech";
 
-    // Verificar se o livro existe e se está disponível
-    $sql_check = "SELECT id FROM livros WHERE nome = '$livro' AND disponivel = 1";
-    $result_check = mysqli_query($conn, $sql_check);
-    
-    if (mysqli_num_rows($result_check) > 0) {
-        $row = mysqli_fetch_assoc($result_check);
-        $livro_id = $row['id'];
-        
-        // Realizar o empréstimo
-        $data_emprestimo = date("Y-m-d");
-        $data_devolucao = date("Y-m-d", strtotime("+14 days"));
-        
-        $sql_emprestimo = "INSERT INTO emprestimos (livro_id, aluno_nome, data_emprestimo, data_devolucao) 
-                           VALUES ('$livro_id', '$aluno', '$data_emprestimo', '$data_devolucao')";
-        $result_emprestimo = mysqli_query($conn, $sql_emprestimo);
-        
-        if ($result_emprestimo) {
-            // Marcar o livro como indisponível
-            $sql_update_livro = "UPDATE livros SET disponivel = 0 WHERE id = '$livro_id'";
-            $result_update_livro = mysqli_query($conn, $sql_update_livro);
-            
-            if ($result_update_livro) {
-                // Empréstimo realizado com sucesso
-                header("Location: adm.php"); // Redirecionar para a página de administração
-                exit;
-            }
-        }
-    }
-    
-    // Caso ocorra algum erro
-    mysqli_close($conn);
-    echo "Erro ao realizar o empréstimo.";
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+if (!$conn) {
+    die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
 }
+
+$livro = $_POST['livro'];
+$aluno = $_POST['aluno'];
+$dataRetirada = date("Y-m-d"); // Data atual
+
+// Verifica se o livro existe no banco de dados
+$verificaLivro = "SELECT * FROM livros WHERE nome = '$livro'";
+$resultLivro = mysqli_query($conn, $verificaLivro);
+
+if (mysqli_num_rows($resultLivro) > 0) {
+    // Verifica se o aluno existe no banco de dados
+    $verificaAluno = "SELECT * FROM alunos WHERE nome = '$aluno'";
+    $resultAluno = mysqli_query($conn, $verificaAluno);
+    
+    if (mysqli_num_rows($resultAluno) > 0) {
+        // Ambos livro e aluno existem, realizar a retirada
+        $sql = "INSERT INTO retiradas (livro_nome, aluno_nome, data_retirada) VALUES ('$livro', '$aluno', '$dataRetirada')";
+    
+        if (mysqli_query($conn, $sql)) {
+            echo "Livro retirado com sucesso!";
+            header("Location: clube_livro.php");
+        } else {
+            echo "Erro ao retirar o livro: " . mysqli_error($conn);
+        }
+    } else {
+        echo "Aluno não encontrado no sistema.";
+    }
+} else {
+    echo "Livro não encontrado no sistema.";
+}
+
+mysqli_close($conn);
 ?>

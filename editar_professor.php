@@ -30,7 +30,7 @@
         }
 
         input {
-            width: 100%;
+            width: 95%;
             padding: 10px;
             margin: 5px 0;
             border: 1px solid #ccc;
@@ -114,9 +114,12 @@
         <input type="text" id="materia" name="materia" value="<?php echo $professor['disciplina']; ?>"><br>
 
         <button type="submit" id="atualizarButton">Atualizar</button>
-        <button type="button" id="cancelarButton" onclick="window.location.href='professores.php'">Cancelar</button>
+        <button type="button" id="cancelarButton" onclick="voltarPagina()">Cancelar</button>
     </form>
     <script>
+        function voltarPagina() {
+            window.history.back();
+        }
         document.getElementById("cpf").addEventListener("input", function() {
             if (this.value.length > 11) {
                 this.value = this.value.slice(0, 11); // Limita a 11 caracteres

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Histórico de Livros Retirados</title>
+    <title>Histórico de Livros Retirados para o Clube do Livro</title>
     <style>
         /* Estilos CSS para o layout */
         body {
@@ -27,67 +27,50 @@
     </style>
 </head>
 <body>
-    <h1>Histórico de Livros Retirados</h1>
+    <h1>Histórico de Livros Retirados para o Clube do Livro</h1>
     <?php
-        // Função para obter o histórico de livros retirados
-        function obterHistoricoLivros()
-        {
-            // Conectar ao banco de dados ou qualquer outra fonte de dados
-            // Substitua este trecho pelo código de conexão e consulta apropriado
-            $servername = "localhost";
-            $username = "root";
-            $password = "root";
-            $dbname = "bibliotech";
+    // Conexão com o banco de dados
+    $servername = "localhost";
+    $username = "root";
+    $password = "root";
+    $dbname = "bibliotech";
 
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            if ($conn->connect_error) {
-                die("Falha na conexão com o banco de dados: " . $conn->connect_error);
-            }
-
-            // Consulta SQL para obter o histórico de livros retirados
-            $sql = "SELECT livro, data_retirada, aluno FROM historico_livros";
-            $result = $conn->query($sql);
-
-            $historicoLivros = array();
-
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $historicoLivros[] = array(
-                        'livro' => $row['livro'],
-                        'data_retirada' => $row['data_retirada'],
-                        'aluno' => $row['aluno']
-                    );
-                }
-            }
-
-            $conn->close();
-
-            return $historicoLivros;
-        }
-
-        // Obtém os dados do histórico de livros retirados
-        $historicoLivros = obterHistoricoLivros();
-
-    if (!empty($historicoLivros)) {
-    echo "<table>";
-    echo "<tr><th>Livro</th><th>Data de Retirada</th><th>Aluno</th></tr>";
-
-    foreach ($historicoLivros as $livro) {
-        // Verifica se $livro é um array antes de acessar suas propriedades
-        if (is_array($livro)) {
-            echo "<tr>";
-            echo "<td>" . $livro['livro'] . "</td>";
-            echo "<td>" . $livro['data_retirada'] . "</td>";
-            echo "<td>" . $livro['aluno'] . "</td>";
-            echo "</tr>";
-        }
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    if (!$conn) {
+        die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
     }
 
-    echo "</table>";
-} else {
-    echo "Nenhum livro foi retirado ainda.";
-}
+    // Consulta para obter o histórico de livros retirados
+    $sql = "SELECT livro_nome, data_retirada, aluno_nome FROM retiradas"; // Corrigido para selecionar os campos corretos
+    $result = mysqli_query($conn, $sql);
+
+    if ($result !== false) {
+        if (mysqli_num_rows($result) > 0) {
+            // Exibe a tabela com o histórico dos livros
+            echo "<table>";
+            echo "<tr><th>Livro</th><th>Data de Retirada</th><th>Aluno</th></tr>";
+
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<tr>";
+                echo "<td>" . $row['livro_nome'] . "</td>";
+                echo "<td>" . $row['data_retirada'] . "</td>";
+                echo "<td>" . $row['aluno_nome'] . "</td>";
+                echo "</tr>";
+            }
+
+            echo "</table>";
+        } else {
+            echo "Nenhum livro foi retirado ainda.";
+        }
+
+        // Fechando o resultado da consulta
+        mysqli_free_result($result);
+    } else {
+        echo "Erro na consulta SQL: " . mysqli_error($conn);
+    }
+
+    // Fechando a conexão com o banco de dados
+    mysqli_close($conn);
     ?>
 </body>
 </html>

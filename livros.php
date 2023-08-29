@@ -263,10 +263,9 @@
         <div class="sidebar-content">
             <img src="./img/logo.png" alt="" width="200" height="50">
             <ul>
-                <li><a href="adm.php">Emprestimo</a></li>
+                <li><a href="adm.php">Empréstimo</a></li>
                 <li><a href="usuarios.php">Alunos</a></li>
                 <li><a href="clube_livro.php">Clube do Livro</a></li>
-                <li><a href="clube_livro.php">Projeto de Leitura</a></li>
                 <li><a href="professores.php">Professores</a></li>
                 <li><a href="cadastro_livro.php">Cadastro de Livros</a></li>
                 <li><a href="livros.php">Livros</a></li>
@@ -276,10 +275,14 @@
 
     <div class="container">
         <h2>Livros Cadastrados</h2>
+        <form action="livros.php" method="GET">
+
         <div class="search-form">
             <input type="text" id="search" name="search" placeholder="Buscar por livro ou autor">
             <button type="submit"><i class="fas fa-search"></i></button>
         </div>
+    </form>
+
         <table>
             <tr>
                 <th>Livro</th>
@@ -309,14 +312,13 @@
             // Verificar se foi enviada uma pesquisa
             if (isset($_GET['search'])) {
                 $search = $_GET['search'];
-
+            
                 // Consulta para recuperar os livros com base na pesquisa
                 $sql = "SELECT * FROM livros WHERE nome LIKE '%$search%' OR autor LIKE '%$search%'";
             } else {
                 // Consulta para recuperar todos os livros
                 $sql = "SELECT * FROM livros";
             }
-
             $result = mysqli_query($conn, $sql);
 
             // Loop para exibir os livros

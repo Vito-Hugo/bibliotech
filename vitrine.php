@@ -41,10 +41,7 @@ session_start();
     <div class="header-2">
         <nav class="navbar">
             <a href="#home"></a>
-            <!-- <a href="#destque">Destaque</a>
-            <a href="#lancamento">Lançamentos</a>
-            <a href="#comentarios">Comentarios</a>
-            <a href="#contato">Contato</a> -->
+           
         </nav>
     </div>
     </header>
