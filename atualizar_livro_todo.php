@@ -24,6 +24,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $novaPosicao = $_POST['posicao'];
         $novoCodigo = $_POST['codigo'];
 
+        
+        if (isset($_FILES['nova_foto']) && $_FILES['nova_foto']['error'] === 0) {
+            $fotoTempName = $_FILES['nova_foto']['tmp_name'];
+            $fotoName = $_FILES['nova_foto']['name'];
+            $fotoPath = "img/" . $fotoName;
+    
+            // Move a foto para o diretório de destino
+            if (move_uploaded_file($fotoTempName, $fotoPath)) {
+                // Atualize o caminho da foto no banco de dados
+                $updateSql = "UPDATE livros SET imagens = '$fotoPath' WHERE codigo = '$livroCodigo'";
+                mysqli_query($conn, $updateSql);
+            }
+        }
+
         // Consulta para atualizar os detalhes do livro com base no código
         $sql = "UPDATE livros SET nome='$novoNome', autor='$novoAutor', classificacao='$novaClassificacao', paginas='$novasPaginas', ano='$novoAno', editora='$novaEditora', idioma='$novoIdioma', posicao='$novaPosicao', codigo='$novoCodigo' WHERE codigo='$livroCodigo'";
         

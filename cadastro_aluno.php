@@ -88,7 +88,6 @@
             $nome = $_POST["nome"];
             $email = $_POST["email"];
             $matricula = $_POST["matricula"];
-            $ano = $_POST["ano"];
             $turma = $_POST["turma"];
             $senha = $_POST["senha"];
 
@@ -107,8 +106,8 @@
             }
 
             // Prepara e executa a inserção no banco de dados
-            $sql = "INSERT INTO usuarios (nome, email, matricula, ano, turma, senha)
-                    VALUES ('$nome', '$email', '$matricula', $ano, '$turma', '$senha')";
+            $sql = "INSERT INTO usuarios (nome, email, matricula, turma, senha)
+                    VALUES ('$nome', '$email', '$matricula',  '$turma', '$senha')";
 
             if ($conn->query($sql)) {
                 echo '<div class="alert-success">Informações inseridas com sucesso!</div>';
@@ -123,7 +122,7 @@
     
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <div class="input-group">
-                <label for="nome">Nome:   </label>
+                <label for="nome">Nome:</label>
 
                 <input type="text" name="nome" required><br>
             </div>

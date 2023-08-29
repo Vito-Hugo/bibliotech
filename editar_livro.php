@@ -37,7 +37,7 @@ if (isset($_GET['codigo'])) {
     </header>
     <div class="container">
         <h2>Editar Livro</h2>
-        <form action="atualizar_livro_todo.php" method="post">
+        <form action="atualizar_livro_todo.php" method="post" enctype="multipart/form-data">
             <!-- Campos do formulário preenchidos com as informações do livro -->
             <label for="nome">Nome do Livro:</label>
             <input type="text" id="nome" name="nome" value="<?php echo $livro['nome']; ?>">
@@ -68,6 +68,13 @@ if (isset($_GET['codigo'])) {
           
             <input type="hidden" name="livro_codigo" value="<?php echo $livro['codigo']; ?>">
             <button type="submit">Salvar Alterações</button>
+
+            <label for="foto">Foto Atual:</label>
+            <img src="<?php echo $livro['imagens']; ?>" alt="Foto do Livro" width="150">
+
+            <label for="nova_foto">Nova Foto:</label>
+            <input type="file" id="nova_foto" name="nova_foto">
+
         </form>
     </div>
 </body>
