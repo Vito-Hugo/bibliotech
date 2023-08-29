@@ -250,6 +250,41 @@
             </div>
         </div>
         <div class="form-container">
+        <?php
+    // Verifica se o formulário foi enviado
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $codigoLivro = $_POST["codigo_livro"];
+        $nomeAluno = $_POST["nome_aluno"];
+        $dataRetirada = $_POST["data_retirada"];
+        $dataEntrega = $_POST["data_entrega"];
+
+        // Conexão com o banco de dados (substitua com suas próprias credenciais)
+        $servername = "localhost";
+        $username = "root";
+        $password = "root";
+        $dbname = "bibliotech";
+
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        // Verifica a conexão com o banco de dados
+        if ($conn->connect_error) {
+            die("Falha na conexão com o banco de dados: " . $conn->connect_error);
+        }
+
+        // Insere os dados no banco de dados
+        $sql = "INSERT INTO emprestimos (codigo_livro, nome_aluno, data_retirada, data_entrega)
+                VALUES ('$codigoLivro', '$nomeAluno', '$dataRetirada', '$dataEntrega')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Empréstimo realizado com sucesso!";
+        } else {
+            echo "Erro ao realizar o empréstimo: " . $conn->error;
+        }
+
+        // Fecha a conexão com o banco de dados
+        $conn->close();
+    }
+    ?>
     <form action="" method="POST">
         <h2>Empréstimo</h2>
         <div class="input-group">
