@@ -192,10 +192,9 @@
     <div class="sidebar">
         <ul>
             <img src="./img/logo.png" alt="" width="200" height="50">
-            <li><a href="adm.php">Emprestimo</a></li>
+            <li><a href="adm.php">Empréstimo</a></li>
             <li><a href="usuarios.php">Alunos</a></li>
             <li><a href="clube_livro.php">Clube do Livro</a></li>
-            <li><a href="clube_livro.php">Projeto de Leitura</a></li>
             <li><a href="professores.php">Professores</a></li>
             <li><a href="cadastro_livro.php">Cadastro de Livros</a></li>
             <li><a href="livros.php">Livros</a></li>

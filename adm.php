@@ -56,24 +56,28 @@
         }  
 
         .container {
-            margin: 20px;
-            overflow: hidden;
+            margin: 80px;
+          
         }
 
         .form-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* Alinhar os formulários no topo */
+        margin-top: -532px;
+        margin-left: 350px;
+    }
 
-        form {
-            margin-left: 20px;
-            align-items: center;
-            background-color: #e6e5e5;
-            padding: 20px 40px 20px 30px;
-            border-radius: 10px;
-            box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
-        }
+
+    form {
+        width: 400px;
+        margin: 0 10px;
+        padding: 50px 60px 70px 30px;
+        background-color: #e6e5e5;
+        border-radius: 10px;
+        box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+    }
 
         form label {
             display: block;
@@ -83,6 +87,7 @@
 
         form input[type="text"],
         form input[type="date"] {
+           
             width: 45%;
             padding: 8px;
             font-size: 16px;
@@ -92,7 +97,7 @@
         }
 
         form .input-group {
-            display: flex;
+            display: column;
             justify-content: space-between;
         }
 
@@ -110,9 +115,12 @@
 
         .box-container {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
+            flex-direction: column; /* Exibe as caixas em coluna */
+            align-items: flex-start; /* Alinha as caixas à esquerda */
+            margin-bottom: 0px;
+            margin-left: 50px;
         }
+
 
         .box {
             width: 200px;
@@ -228,6 +236,7 @@
             <li><a href="#">Empréstimo</a></li>
             <li><a href="usuarios.php">Alunos</a></li>
             <li><a href="clube_livro.php">Clube do Livro</a></li>
+            <li><a href="#">Projeto de Leitura</a></li>
             <li><a href="professores.php">Professores</a></li>
             <li><a href="cadastro_livro.php">Cadastro de Livros</a></li>
             <li><a href="livros.php">Livros</a></li>
@@ -239,51 +248,17 @@
                 <h2>Livros</h2>
                 <p><?php echo $quantidadeLivros; ?></p>
             </div>
+            <br>
             <div class="box">
                 <h2>Emprestados</h2>
                 <p>20</p>
             </div>
+            <br>
             <div class="box">
                 <h2>Atrasados</h2>
                 <p>5</p>
             </div>
-        </div>
         <div class="form-container">
-        <?php
-    // Verifica se o formulário foi enviado
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $codigoLivro = $_POST["codigo_livro"];
-        $nomeAluno = $_POST["nome_aluno"];
-        $dataRetirada = $_POST["data_retirada"];
-        $dataEntrega = $_POST["data_entrega"];
-
-        // Conexão com o banco de dados (substitua com suas próprias credenciais)
-        $servername = "localhost";
-        $username = "root";
-        $password = "root";
-        $dbname = "bibliotech";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Verifica a conexão com o banco de dados
-        if ($conn->connect_error) {
-            die("Falha na conexão com o banco de dados: " . $conn->connect_error);
-        }
-
-        // Insere os dados no banco de dados
-        $sql = "INSERT INTO emprestimos (codigo_livro, nome_aluno, data_retirada, data_entrega)
-                VALUES ('$codigoLivro', '$nomeAluno', '$dataRetirada', '$dataEntrega')";
-
-        if ($conn->query($sql) === TRUE) {
-            echo "Empréstimo realizado com sucesso!";
-        } else {
-            echo "Erro ao realizar o empréstimo: " . $conn->error;
-        }
-
-        // Fecha a conexão com o banco de dados
-        $conn->close();
-    }
-    ?>
     <form action="" method="POST">
         <h2>Empréstimo</h2>
         <div class="input-group">
@@ -333,9 +308,6 @@
         </div>
        <button type="submit" name="renovacaoSubmit">Renovar Empréstimo</button>
     </form>
-    
-  
-
 </div>
     </div>
 </body>
