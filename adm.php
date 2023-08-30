@@ -219,6 +219,11 @@
  $resultQuantidadeLivros = mysqli_query($conn, $sqlQuantidadeLivros);
  $rowQuantidadeLivros = mysqli_fetch_assoc($resultQuantidadeLivros);
  $quantidadeLivros = $rowQuantidadeLivros['unidade'];
+
+$sqlQuantidadeEmprestimos = "SELECT COUNT(*) AS quantidade FROM emprestimos";
+$resultQuantidadeEmprestimos = mysqli_query($conn, $sqlQuantidadeEmprestimos);
+$rowQuantidadeEmprestimos = mysqli_fetch_assoc($resultQuantidadeEmprestimos);
+$quantidadeEmprestimos = $rowQuantidadeEmprestimos['quantidade'];
  
  // Fechando a conexão com o banco de dados
  mysqli_close($conn);
@@ -251,7 +256,7 @@
             <br>
             <div class="box">
                 <h2>Emprestados</h2>
-                <p>20</p>
+                <p><?php echo $quantidadeEmprestimos; ?></p>
             </div>
             <br>
             <div class="box">
@@ -282,6 +287,9 @@
             </div>
         </div>
         <button type="submit" name="emprestimoSubmit">Realizar Empréstimo</button>
+            <div class="history-button">
+                <a href="historico_emprestimo.php">Ver Histórico de Empréstimos</a>
+            </div>
     </form>
 
     <form action="" method="POST">
