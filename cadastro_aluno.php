@@ -111,6 +111,7 @@
 
             if ($conn->query($sql)) {
                 echo '<div class="alert-success">Informações inseridas com sucesso!</div>';
+                header('Location: login_aluno.php');
             } else {
                 echo "Erro ao inserir informações: " . $conn->error;
             }

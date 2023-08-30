@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         // Cadastro realizado com sucesso, redirecionar para a página "adm.html"
-        header("Location: adm.php");
+        header("Location: login_professor.php");
         exit;
     } else {
         echo "Erro ao cadastrar: " . $conn->error;
