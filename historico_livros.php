@@ -41,20 +41,20 @@
     }
 
     // Consulta para obter o histórico de livros retirados
-    $sql = "SELECT livro_nome, data_retirada, aluno_nome FROM retiradas"; // Corrigido para selecionar os campos corretos
+    $sql = "SELECT livro_nome, data_retirada, matricula FROM retiradas"; // Substituído para selecionar a matricula
     $result = mysqli_query($conn, $sql);
 
     if ($result !== false) {
         if (mysqli_num_rows($result) > 0) {
             // Exibe a tabela com o histórico dos livros
             echo "<table>";
-            echo "<tr><th>Livro</th><th>Data de Retirada</th><th>Aluno</th></tr>";
+            echo "<tr><th>Livro</th><th>Data de Retirada</th><th>Matrícula do Aluno</th></tr>";
 
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<tr>";
                 echo "<td>" . $row['livro_nome'] . "</td>";
                 echo "<td>" . $row['data_retirada'] . "</td>";
-                echo "<td>" . $row['aluno_nome'] . "</td>";
+                echo "<td>" . $row['matricula'] . "</td>";
                 echo "</tr>";
             }
 
