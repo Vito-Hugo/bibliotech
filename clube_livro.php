@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administração da Biblioteca</title>
+    <title>Clube do Livro</title>
     <style>
-     
       body {
             margin: 0;
             padding: 0;
@@ -32,6 +31,11 @@
             padding: 20px;
             float: left;
             box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            max-height: calc(100vh - 60px); /* Adjust based on your header height */
+            overflow-y: auto;
         }
 
         .sidebar ul {
@@ -114,10 +118,10 @@ form {
 
         .box-container {
             display: flex;
-            flex-direction: column; /* Alterado para exibir os boxes em coluna */
-            align-items: flex-start; /* Alinha os boxes à esquerda */
-            margin-bottom: 0px;
-            margin-left: 50px;
+    flex-direction: column; /* Alterado para exibir os boxes em coluna */
+    align-items: flex-start; /* Alinha os boxes à esquerda */
+    margin-bottom: 0px;
+    margin-left: 50px;
         }
 
         .box {
@@ -135,40 +139,39 @@ form {
             margin: 0;
         }
         
-        .user-info {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: flex;
-            align-items: center;
-        }
+    .user-info {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        align-items: center;
+    }
 
-        .user-info span {
-            margin-right: 10px;
-            font-weight: bold;
-        }
+    .user-info span {
+        margin-right: 10px;
+        font-weight: bold;
+    }
 
-        .user-info a {
-            color: #fff;
-            text-decoration: none;
-            background-color: #e32636;
-            padding: 5px;
-            border-radius: 10px;
-        }
+    .user-info a {
+        color: #fff;
+        text-decoration: none;
+        background-color: #e32636;
+        padding: 5px;
+        border-radius: 10px;
+    }
 
-    
+
     </style>
 </head>
 <body>
-<?php
+    <?php
     session_start();
     if (!isset($_SESSION["nome_usuario"])) {
         header("Location: cadastro_professor.html");
         exit;
     }
     $nomeUsuario = $_SESSION["nome_usuario"];
-    error_reporting(E_ALL);
-    ini_set('display_errors', '1');
+
     // Conexão com o banco de dados
     $servername = "localhost";
     $username = "root";
@@ -181,20 +184,14 @@ form {
     }
 
     // Consulta para recuperar a quantidade de livros cadastrados
-    $sqlLivros = "SELECT COUNT(*) AS totalLivros FROM livros";
-    $resultLivros = mysqli_query($conn, $sqlLivros);
-    $rowLivros = mysqli_fetch_assoc($resultLivros);
-    $quantidadeLivros = $rowLivros['totalLivros'];
-
-    // Consulta para recuperar a quantidade de livros retirados
-    $sqlRetiradas = "SELECT COUNT(*) AS totalRetiradas FROM retiradas";
-    $resultRetiradas = mysqli_query($conn, $sqlRetiradas);
-    $rowRetiradas = mysqli_fetch_assoc($resultRetiradas);
-    $quantidadeRetiradas = $rowRetiradas['totalRetiradas'];
+    $sql = "SELECT COUNT(*) AS total FROM livros";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $quantidadeLivros = $row['total'];
 
     // Fechando a conexão com o banco de dados
     mysqli_close($conn);
-?>
+    ?>
     <header>
         <h1>Administração da Biblioteca</h1>
         <div class="user-info">
@@ -208,6 +205,7 @@ form {
             <li><a href="adm.php">Empréstimo</a></li>
             <li><a href="usuarios.php">Alunos</a></li>
             <li><a href="clube_livro.php">Clube do Livro</a></li>
+            <li><a href="clube_livro.php">Projeto de Leitura</a></li>
             <li><a href="professores.php">Professores</a></li>
             <li><a href="cadastro_livro.php">Cadastro de Livros</a></li>
             <li><a href="livros.php">Livros</a></li>
@@ -215,16 +213,16 @@ form {
     </div>
     <div class="container">
         <div class="box-container">
-           
-        <div class="box">
-            <h2>Livros</h2>
-            <p><?php echo $quantidadeLivros; ?></p>
-        </div>
-        <div class="box">
-            <h2>Retirados</h2>
-            <p><?php echo $quantidadeRetiradas; ?></p>
-        </div>
-
+            <div class="box">
+                <h2>Livros</h2>
+                <p><?php echo $quantidadeLivros; ?></p>
+            </div>
+            <br>
+            <div class="box">
+                <h2>Emprestados</h2>
+                <p>20</p>
+            </div>
+            <br>
             <div class="box">
                 <h2>Atrasados</h2>
                 <p>5</p>
@@ -233,15 +231,10 @@ form {
         <div class="form-container">
             <form method="POST" action="retirada_livros.php">
                 <h2>Retirada de Livros</h2>
-                <label for="livro">Codigo do Livro:</label>
+                <label for="livro">Nome do Livro:</label>
                 <input type="text" name="livro" id="livro" required>
-
-                
-                <div class="input-group">
-                <label for="matricula">Matrícula:</label>
-                <input type="number" name="matricula" id="matricula" maxlength="10" required><br>
-            </div>
-
+                <label for="aluno">Nome do Aluno:</label>
+                <input type="text" id="aluno" name="aluno" required>
                 <button type="submit">Retirar Livro</button>
                 <form method="POST" action="historico_livros.php">
                 <!-- Here you can add any additional input fields if needed -->
