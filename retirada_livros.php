@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Retirada de Livros</title>
+    <script>
+        function showAlert(message, redirect) {
+            alert(message);
+            if (redirect) {
+                window.location.href = redirect;
+            }
+        }
+    </script>
+</head>
+<body>
 <?php
 session_start();
 
@@ -22,34 +36,35 @@ if (!$conn) {
 }
 
 $livro = $_POST['livro'];
-$aluno = $_POST['aluno'];
+$matricula = $_POST['matricula']; // Substituído 'aluno' por 'matricula'
 $dataRetirada = date("Y-m-d"); // Data atual
 
 // Verifica se o livro existe no banco de dados
-$verificaLivro = "SELECT * FROM livros WHERE nome = '$livro'";
+$verificaLivro = "SELECT * FROM livros WHERE codigo = '$livro'";
 $resultLivro = mysqli_query($conn, $verificaLivro);
 
 if (mysqli_num_rows($resultLivro) > 0) {
-    // Verifica se o aluno existe no banco de dados
-    $verificaAluno = "SELECT * FROM alunos WHERE nome = '$aluno'";
-    $resultAluno = mysqli_query($conn, $verificaAluno);
+    // Verifica se a matrícula existe no banco de dados
+    $verificaMatricula = "SELECT * FROM usuarios WHERE matricula = '$matricula'";
+    $resultMatricula = mysqli_query($conn, $verificaMatricula);
     
-    if (mysqli_num_rows($resultAluno) > 0) {
-        // Ambos livro e aluno existem, realizar a retirada
-        $sql = "INSERT INTO retiradas (livro_nome, aluno_nome, data_retirada) VALUES ('$livro', '$aluno', '$dataRetirada')";
+    if (mysqli_num_rows($resultMatricula) > 0) {
+        // Livro e matrícula existem, realizar a retirada
+        $sql = "INSERT INTO retiradas (livro_nome, matricula, data_retirada) VALUES ('$livro', '$matricula', '$dataRetirada')";
     
         if (mysqli_query($conn, $sql)) {
-            echo "Livro retirado com sucesso!";
-            header("Location: clube_livro.php");
+            echo "<script>showAlert('Livro retirado com sucesso!', 'clube_livro.php');</script>";
         } else {
-            echo "Erro ao retirar o livro: " . mysqli_error($conn);
+            echo "<script>showAlert('Erro ao retirar o livro: " . mysqli_error($conn) . "', 'clube_livro.php');</script>";
         }
     } else {
-        echo "Aluno não encontrado no sistema.";
+        echo "<script>showAlert('Aluno não encontrado no sistema.', 'clube_livro.php');</script>";
     }
 } else {
-    echo "Livro não encontrado no sistema.";
+    echo "<script>showAlert('Livro não encontrado no sistema.', 'clube_livro.php');</script>";
 }
 
 mysqli_close($conn);
 ?>
+</body>
+</html>

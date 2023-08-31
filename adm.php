@@ -72,7 +72,7 @@
     form {
         width: 400px;
         margin: 0 10px;
-        padding: 50px 60px 70px 30px;
+        padding: 50px 60px 72px 30px;
         background-color: #e6e5e5;
         border-radius: 10px;
         box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
@@ -88,7 +88,7 @@
         form input[type="text"],
         form input[type="date"] {
            
-            width: 45%;
+            width: 100%;
             padding: 8px;
             font-size: 16px;
             border-radius: 5px;

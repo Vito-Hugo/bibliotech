@@ -93,6 +93,12 @@
             padding: 20px;
             float: left;
             box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            max-height: calc(100vh - 60px); /* Adjust based on your header height */
+            overflow-y: auto;
+            
         }
 
         .sidebar ul {
