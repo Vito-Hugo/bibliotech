@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clube do Livro</title>
+    <title>Administração da Biblioteca</title>
     <style>
       body {
             margin: 0;
@@ -31,11 +31,6 @@
             padding: 20px;
             float: left;
             box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            max-height: calc(100vh - 60px); /* Adjust based on your header height */
-            overflow-y: auto;
         }
 
         .sidebar ul {
@@ -61,26 +56,24 @@
         }  
 
         .container {
-            margin: 80px;
-            
+            margin: 20px;
+            overflow: hidden;
         }
 
         .form-container {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start; /* Alinhar os formulários no topo */
-        margin-top: -532px;
-        margin-left: 320px;
-    }
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-form {
-        width: 400px;
-        padding: 95px 60px 110px 30px;
-        background-color: #e6e5e5;
-        border-radius: 10px;
-        box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
-        margin-bottom: 20px;
-    }
+        form {
+            margin-left: 20px;
+            align-items: center;
+            background-color: #e6e5e5;
+            padding: 20px 40px 20px 30px;
+            border-radius: 10px;
+            box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+        }
 
         form label {
             display: block;
@@ -90,7 +83,7 @@ form {
 
         form input[type="text"],
         form input[type="date"] {
-            width: 100%;
+            width: 45%;
             padding: 8px;
             font-size: 16px;
             border-radius: 5px;
@@ -100,28 +93,25 @@ form {
 
         form .input-group {
             display: flex;
-           
+            justify-content: space-between;
         }
 
         form button {
             padding: 10px 20px;
             font-size: 18px;
             background-color: #20C475;
-            color: #ffffff;
+            color: #fff;
             border: none;
             cursor: pointer;
             border-radius: 5px;
             display: block;
             margin-top: 20px;
-            
         }
 
         .box-container {
             display: flex;
-    flex-direction: column; /* Alterado para exibir os boxes em coluna */
-    align-items: flex-start; /* Alinha os boxes à esquerda */
-    margin-bottom: 0px;
-    margin-left: 50px;
+            justify-content: space-between;
+            margin-bottom: 20px;
         }
 
         .box {
@@ -164,14 +154,15 @@ form {
     </style>
 </head>
 <body>
-    <?php
+<?php
     session_start();
     if (!isset($_SESSION["nome_usuario"])) {
         header("Location: cadastro_professor.html");
         exit;
     }
     $nomeUsuario = $_SESSION["nome_usuario"];
-
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
     // Conexão com o banco de dados
     $servername = "localhost";
     $username = "root";
@@ -184,14 +175,20 @@ form {
     }
 
     // Consulta para recuperar a quantidade de livros cadastrados
-    $sql = "SELECT COUNT(*) AS total FROM livros";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-    $quantidadeLivros = $row['total'];
+    $sqlLivros = "SELECT COUNT(*) AS totalLivros FROM livros";
+    $resultLivros = mysqli_query($conn, $sqlLivros);
+    $rowLivros = mysqli_fetch_assoc($resultLivros);
+    $quantidadeLivros = $rowLivros['totalLivros'];
+
+    // Consulta para recuperar a quantidade de livros retirados
+    $sqlRetiradas = "SELECT COUNT(*) AS totalRetiradas FROM retiradas";
+    $resultRetiradas = mysqli_query($conn, $sqlRetiradas);
+    $rowRetiradas = mysqli_fetch_assoc($resultRetiradas);
+    $quantidadeRetiradas = $rowRetiradas['totalRetiradas'];
 
     // Fechando a conexão com o banco de dados
     mysqli_close($conn);
-    ?>
+?>
     <header>
         <h1>Administração da Biblioteca</h1>
         <div class="user-info">
@@ -205,7 +202,6 @@ form {
             <li><a href="adm.php">Empréstimo</a></li>
             <li><a href="usuarios.php">Alunos</a></li>
             <li><a href="clube_livro.php">Clube do Livro</a></li>
-            <li><a href="clube_livro.php">Projeto de Leitura</a></li>
             <li><a href="professores.php">Professores</a></li>
             <li><a href="cadastro_livro.php">Cadastro de Livros</a></li>
             <li><a href="livros.php">Livros</a></li>
@@ -213,16 +209,16 @@ form {
     </div>
     <div class="container">
         <div class="box-container">
-            <div class="box">
-                <h2>Livros</h2>
-                <p><?php echo $quantidadeLivros; ?></p>
-            </div>
-            <br>
-            <div class="box">
-                <h2>Emprestados</h2>
-                <p>20</p>
-            </div>
-            <br>
+           
+        <div class="box">
+            <h2>Livros</h2>
+            <p><?php echo $quantidadeLivros; ?></p>
+        </div>
+        <div class="box">
+            <h2>Retirados</h2>
+            <p><?php echo $quantidadeRetiradas; ?></p>
+        </div>
+
             <div class="box">
                 <h2>Atrasados</h2>
                 <p>5</p>
@@ -231,10 +227,13 @@ form {
         <div class="form-container">
             <form method="POST" action="retirada_livros.php">
                 <h2>Retirada de Livros</h2>
-                <label for="livro">Nome do Livro:</label>
-                <input type="text" name="livro" id="livro" required>
-                <label for="aluno">Nome do Aluno:</label>
-                <input type="text" id="aluno" name="aluno" required>
+                <label for="codigo">Codigo do Livro:</label>
+                <input type="text" name="codigo" id="codigo" required>
+
+                
+                <label for="matricula">Matrícula (10 dígitos):</label>
+                <input type="number" id="matricula" name="matricula" required maxlength="10">
+
                 <button type="submit">Retirar Livro</button>
                 <form method="POST" action="historico_livros.php">
                 <!-- Here you can add any additional input fields if needed -->
