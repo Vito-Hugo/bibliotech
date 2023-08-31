@@ -109,7 +109,7 @@ mysqli_close($conexao);
 }
 </style>
 <body>
-    <?php
+<?php
     if (isset($error_message)) {
         echo "<p>$error_message</p>";
     } else {

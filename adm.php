@@ -72,7 +72,7 @@
     form {
         width: 400px;
         margin: 0 10px;
-        padding: 50px 60px 72px 30px;
+        padding: 20px 60px 40px 30px;
         background-color: #e6e5e5;
         border-radius: 10px;
         box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
@@ -199,24 +199,20 @@
  
  // Verifica se o formulário de empréstimo foi enviado
  if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codigo"]) && isset($_POST["aluno"]) && isset($_POST["retirada"]) && isset($_POST["entrega"])) {
-    $codigoLivro = $_POST["codigo"];
-    $nomeAluno = $_POST["aluno"];
-    $dataRetirada = $_POST["retirada"];
-    $dataEntrega = $_POST["entrega"];
-    
-    // Inserir os dados na tabela de empréstimos
-    $sqlEmprestimos = "INSERT INTO emprestimos (codigo_livro, nome_aluno, data_retirada, data_entrega) VALUES ('$codigoLivro', '$nomeAluno', '$dataRetirada', '$dataEntrega')";
-    
-    if (mysqli_query($conn, $sqlEmprestimos)) {
-        // Atualizar a quantidade de livros disponíveis na tabela 'livros'
-        $sqlUpdateLivros = "UPDATE livros SET quantidade_disponivel = quantidade_disponivel - 1 WHERE codigo = '$codigoLivro'";
-        mysqli_query($conn, $sqlUpdateLivros);
-
-        $successMessage = "Empréstimo realizado com sucesso!";
-    } else {
-        $errorMessage = "Erro ao realizar o empréstimo: " . mysqli_error($conn);
-    }
-}
+     $codigoLivro = $_POST["codigo"];
+     $nomeAluno = $_POST["aluno"];
+     $dataRetirada = $_POST["retirada"];
+     $dataEntrega = $_POST["entrega"];
+     
+     // Inserir os dados na tabela de empréstimos
+     $sqlEmprestimos = "INSERT INTO emprestimos (codigo_livro, nome_aluno, data_retirada, data_entrega) VALUES ('$codigoLivro', '$nomeAluno', '$dataRetirada', '$dataEntrega')";
+     
+     if (mysqli_query($conn, $sqlEmprestimos)) {
+         $successMessage = "Empréstimo realizado com sucesso!";
+     } else {
+         $errorMessage = "Erro ao realizar o empréstimo: " . mysqli_error($conn);
+     }
+ }
  
  // Consulta para recuperar a quantidade de livros cadastrados
  $sqlQuantidadeLivros = "SELECT COUNT(*) AS unidade FROM livros";
@@ -245,7 +241,6 @@ $quantidadeEmprestimos = $rowQuantidadeEmprestimos['quantidade'];
             <li><a href="#">Empréstimo</a></li>
             <li><a href="usuarios.php">Alunos</a></li>
             <li><a href="clube_livro.php">Clube do Livro</a></li>
-            <li><a href="#">Projeto de Leitura</a></li>
             <li><a href="professores.php">Professores</a></li>
             <li><a href="cadastro_livro.php">Cadastro de Livros</a></li>
             <li><a href="livros.php">Livros</a></li>
@@ -265,7 +260,7 @@ $quantidadeEmprestimos = $rowQuantidadeEmprestimos['quantidade'];
             <br>
             <div class="box">
                 <h2>Atrasados</h2>
-                <p>0</p>
+                <p>5</p>
             </div>
         <div class="form-container">
     <form action="" method="POST">
@@ -292,7 +287,9 @@ $quantidadeEmprestimos = $rowQuantidadeEmprestimos['quantidade'];
         </div>
         <button type="submit" name="emprestimoSubmit">Realizar Empréstimo</button>
             <div class="history-button">
+                <button>
                 <a href="historico_emprestimo.php">Ver Histórico de Empréstimos</a>
+</button>
             </div>
     </form>
 
@@ -319,6 +316,9 @@ $quantidadeEmprestimos = $rowQuantidadeEmprestimos['quantidade'];
             </div>
         </div>
        <button type="submit" name="renovacaoSubmit">Renovar Empréstimo</button>
+       <br>
+       <br>
+       <br>
     </form>
 </div>
     </div>

@@ -30,13 +30,15 @@
         .sidebar {
             background-color: #f2f2f2;
             width: 200px;
-            height: 100%;
+            height: 100vh;
             padding: 20px;
+            float: left;
             box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
-            position: fixed;
-            top: 30px; /* Adicione esta linha para adicionar espaço acima da barra lateral */
-            left: 0;
-            overflow-y: auto; 
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            max-height: calc(100vh - 60px); /* Adjust based on your header height */
+            overflow-y: auto;
         }
 
         .sidebar ul {
@@ -46,6 +48,7 @@
         }
 
         .sidebar ul li {
+            margin-top: 20px;
             margin-bottom: 15px;
         }
 
@@ -63,8 +66,7 @@
 
         .container {
             margin: 20px;
-            margin-left: 240px;
-            padding-top: 20px;
+            overflow: hidden;
         }
 
         .form-container {

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administração da Biblioteca</title>
     <style>
-      body {
+     body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
@@ -31,6 +31,11 @@
             padding: 20px;
             float: left;
             box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            max-height: calc(100vh - 60px); /* Adjust based on your header height */
+            overflow-y: auto;
         }
 
         .sidebar ul {
@@ -56,24 +61,26 @@
         }  
 
         .container {
-            margin: 20px;
-            overflow: hidden;
+            margin: 80px;
+            
         }
 
         .form-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* Alinhar os formulários no topo */
+        margin-top: -532px;
+        margin-left: 320px;
+    }
 
-        form {
-            margin-left: 20px;
-            align-items: center;
-            background-color: #e6e5e5;
-            padding: 20px 40px 20px 30px;
-            border-radius: 10px;
-            box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
-        }
+form {
+        width: 400px;
+        padding: 95px 60px 110px 30px;
+        background-color: #e6e5e5;
+        border-radius: 10px;
+        box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+    }
 
         form label {
             display: block;
@@ -83,7 +90,7 @@
 
         form input[type="text"],
         form input[type="date"] {
-            width: 45%;
+            width: 100%;
             padding: 8px;
             font-size: 16px;
             border-radius: 5px;
@@ -91,27 +98,32 @@
             margin-bottom: 10px;
         }
 
+        
+
         form .input-group {
             display: flex;
-            justify-content: space-between;
+           
         }
 
         form button {
             padding: 10px 20px;
             font-size: 18px;
             background-color: #20C475;
-            color: #fff;
+            color: #ffffff;
             border: none;
             cursor: pointer;
             border-radius: 5px;
             display: block;
             margin-top: 20px;
+            
         }
 
         .box-container {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
+    flex-direction: column; /* Alterado para exibir os boxes em coluna */
+    align-items: flex-start; /* Alinha os boxes à esquerda */
+    margin-bottom: 0px;
+    margin-left: 50px;
         }
 
         .box {
@@ -214,11 +226,12 @@
             <h2>Livros</h2>
             <p><?php echo $quantidadeLivros; ?></p>
         </div>
+        <br>
         <div class="box">
             <h2>Retirados</h2>
             <p><?php echo $quantidadeRetiradas; ?></p>
         </div>
-
+        <br>
             <div class="box">
                 <h2>Atrasados</h2>
                 <p>5</p>
@@ -232,7 +245,7 @@
 
                 
                 <label for="matricula">Matrícula (10 dígitos):</label>
-                <input type="number" id="matricula" name="matricula" required maxlength="10">
+                <input type="text" id="matricula" name="matricula" required maxlength="10">
 
                 <button type="submit">Retirar Livro</button>
                 <form method="POST" action="historico_livros.php">

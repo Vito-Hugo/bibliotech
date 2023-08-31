@@ -32,7 +32,8 @@ th, td {
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #20C475;
+    color:#ffffff;
 }
 
 td {
@@ -58,7 +59,7 @@ button:hover {
 }
 
 .back-button {
-    background-color: #007bff;
+    background-color: #20C475;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -71,11 +72,19 @@ button:hover {
 }
 
 .back-button:hover {
-    background-color: #0056b3;
+    background-color: #179457;
 }
+header{
+            background-color: #ccc;
+            box-shadow:black 0px 5px 5px black;
+            text-align: center;
+        }
 </style>
  </head>
     <body>
+    <header>
+        <img src="./img/logo.png" alt="" width="200" height="50">
+    </header>
     <?php
     $servername = "localhost";
     $username = "root";
