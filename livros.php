@@ -9,7 +9,7 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serf;
+            font-family: Arial, sans-serif;
         }
 
         header {
@@ -85,7 +85,7 @@
         form label {
             display: block;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
         }
 
         form input[type="text"],
@@ -95,7 +95,7 @@
             font-size: 16px;
             border-radius: 5px;
             border: 1px solid #ccc;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         form .input-group {
@@ -105,14 +105,15 @@
 
         form button {
             padding: 10px 20px;
-            font-size: 18px;
+            font-size: 16px;
             background-color: #20C475;
             color: #fff;
             border: none;
             cursor: pointer;
             border-radius: 5px;
             display: block;
-            margin-top: 20px;
+            margin-top: 0px;
+            margin-bottom: 5px;
         }
 
         .box-container {
