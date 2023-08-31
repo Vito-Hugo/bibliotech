@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Retirada de Livros</title>
     <script>
-        function showAlert(message, redirect) {
-            alert(message);
-            if (redirect) {
-                window.location.href = redirect;
-            }
+    function showAlert(message, redirect) {
+        alert(message);
+        if (redirect) {
+            window.location.href = redirect;
         }
-    </script>
+    }
+</script>
 </head>
 <body>
 <?php
@@ -28,15 +30,18 @@ $servername = "localhost";
 $username = "root";
 $password = "root";
 $dbname = "bibliotech";
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
 if (!$conn) {
     die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
 }
-
 $livro = $_POST['livro'];
-$matricula = $_POST['matricula']; // Substituído 'aluno' por 'matricula'
+$livro = $_POST['codigo'];
+$matricula = $_POST['matricula'];
 $dataRetirada = date("Y-m-d"); // Data atual
 
 // Verifica se o livro existe no banco de dados
