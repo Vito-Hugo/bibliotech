@@ -199,20 +199,24 @@
  
  // Verifica se o formulário de empréstimo foi enviado
  if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["codigo"]) && isset($_POST["aluno"]) && isset($_POST["retirada"]) && isset($_POST["entrega"])) {
-     $codigoLivro = $_POST["codigo"];
-     $nomeAluno = $_POST["aluno"];
-     $dataRetirada = $_POST["retirada"];
-     $dataEntrega = $_POST["entrega"];
-     
-     // Inserir os dados na tabela de empréstimos
-     $sqlEmprestimos = "INSERT INTO emprestimos (codigo_livro, nome_aluno, data_retirada, data_entrega) VALUES ('$codigoLivro', '$nomeAluno', '$dataRetirada', '$dataEntrega')";
-     
-     if (mysqli_query($conn, $sqlEmprestimos)) {
-         $successMessage = "Empréstimo realizado com sucesso!";
-     } else {
-         $errorMessage = "Erro ao realizar o empréstimo: " . mysqli_error($conn);
-     }
- }
+    $codigoLivro = $_POST["codigo"];
+    $nomeAluno = $_POST["aluno"];
+    $dataRetirada = $_POST["retirada"];
+    $dataEntrega = $_POST["entrega"];
+    
+    // Inserir os dados na tabela de empréstimos
+    $sqlEmprestimos = "INSERT INTO emprestimos (codigo_livro, nome_aluno, data_retirada, data_entrega) VALUES ('$codigoLivro', '$nomeAluno', '$dataRetirada', '$dataEntrega')";
+    
+    if (mysqli_query($conn, $sqlEmprestimos)) {
+        // Atualizar a quantidade de livros disponíveis na tabela 'livros'
+        $sqlUpdateLivros = "UPDATE livros SET quantidade_disponivel = quantidade_disponivel - 1 WHERE codigo = '$codigoLivro'";
+        mysqli_query($conn, $sqlUpdateLivros);
+
+        $successMessage = "Empréstimo realizado com sucesso!";
+    } else {
+        $errorMessage = "Erro ao realizar o empréstimo: " . mysqli_error($conn);
+    }
+}
  
  // Consulta para recuperar a quantidade de livros cadastrados
  $sqlQuantidadeLivros = "SELECT COUNT(*) AS unidade FROM livros";

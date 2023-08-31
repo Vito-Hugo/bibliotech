@@ -2,8 +2,79 @@
 <html lang="pt-br">
 <head>
     <style>
-body {             font-family: Arial, sans-serif;             margin: 0;             padding: 0;             background-color: #f2f2f2;         }          header {             background-color: #20C475;             color: #fff;             p</head>
-    </style>
+body, h1, table {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+td {
+    vertical-align: middle;
+}
+
+button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #c82333;
+}
+.button-container {
+    text-align: left;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.back-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
+</style>
+ </head>
     <body>
     <?php
     $servername = "localhost";
@@ -34,7 +105,9 @@ body {             font-family: Arial, sans-serif;             margin: 0;       
 
     mysqli_close($conn);
     ?>
-
+    <div class="button-container">
+        <a class="back-button" href="adm.php">Voltar</a>
+    </div>
     <h1>Histórico de Empréstimos</h1>
     <table>
         <tr>
