@@ -1,76 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Histórico de Empréstimos</title>
-    <!-- Add your CSS styles here -->
     <style>
-       
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-        }
-
-        header {
-            background-color: #20C475;
-            color: #fff;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        .container {
-            margin: 20px;
-            overflow: hidden;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #fff;
-            box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #20C475;
-            color: #fff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        a.button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #20C475;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-
-        a.button:hover {
-            background-color: #1a8742;
-        }
+body {             font-family: Arial, sans-serif;             margin: 0;             padding: 0;             background-color: #f2f2f2;         }          header {             background-color: #20C475;             color: #fff;             p</head>
     </style>
-
-</head>
-<body>
+    <body>
     <?php
     $servername = "localhost";
     $username = "root";
@@ -86,6 +20,18 @@
     $sqlLoanHistory = "SELECT * FROM emprestimos ORDER BY data_retirada DESC";
     $resultLoanHistory = mysqli_query($conn, $sqlLoanHistory);
 
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete"])) {
+        $loanIdToDelete = $_POST["delete"];
+
+        // Delete the selected loan from the database
+        $sqlDeleteLoan = "DELETE FROM emprestimos WHERE id = '$loanIdToDelete'";
+        if (mysqli_query($conn, $sqlDeleteLoan)) {
+            // Success message or additional actions can be added here
+        } else {
+            // Error message or handling can be added here
+        }
+    }
+
     mysqli_close($conn);
     ?>
 
@@ -96,6 +42,7 @@
             <th>Nome do Aluno</th>
             <th>Data de Retirada</th>
             <th>Data de Entrega</th>
+            <th>Ação</th>
         </tr>
         <?php
         if ($resultLoanHistory && mysqli_num_rows($resultLoanHistory) > 0) {
@@ -105,10 +52,16 @@
                 echo "<td>" . $row["nome_aluno"] . "</td>";
                 echo "<td>" . $row["data_retirada"] . "</td>";
                 echo "<td>" . $row["data_entrega"] . "</td>";
+                echo "<td>
+                        <form method='POST'>
+                            <input type='hidden' name='delete' value='" . $row["id"] . "'>
+                            <button type='submit'>Excluir</button>
+                        </form>
+                      </td>";
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='4'>Nenhum empréstimo encontrado.</td></tr>";
+            echo "<tr><td colspan='5'>Nenhum empréstimo encontrado.</td></tr>";
         }
         ?>
     </table>

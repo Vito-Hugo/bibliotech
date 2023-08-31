@@ -261,7 +261,7 @@ $quantidadeEmprestimos = $rowQuantidadeEmprestimos['quantidade'];
             <br>
             <div class="box">
                 <h2>Atrasados</h2>
-                <p>5</p>
+                <p>0</p>
             </div>
         <div class="form-container">
     <form action="" method="POST">
