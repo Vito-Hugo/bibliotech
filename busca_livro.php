@@ -130,8 +130,11 @@ if (isset($_GET['livro-nome']) && isset($_GET['tipo-pesquisa'])) {
         while ($row = $result->fetch_assoc()) {
             echo '<div class="book">';
             echo '<h3>' . $row['nome'] . '</h3>';
-            echo '<p>autor: ' . $row['autor'] . '</p>';
-            echo '<img src="' . $row['imagens'] . '" alt="Capa do livro">';
+            echo '<p>Autor: ' . $row['autor'] . '</p>';
+            
+            // Adicione um link à imagem que direciona para descricao.php com o ID do livro como parâmetro
+            echo '<a href="descricao.php?id=' . $row['id'] . '"><img src="' . $row['imagens'] . '" alt="Capa do livro"></a>';
+            
             // Adicione outras informações do livro aqui, se necessário
             echo '</div>';
         }
@@ -139,6 +142,7 @@ if (isset($_GET['livro-nome']) && isset($_GET['tipo-pesquisa'])) {
     } else {
         echo '<p class="message">Nenhum livro encontrado.</p>';
     }
+    
 
     $conn->close();
 }
